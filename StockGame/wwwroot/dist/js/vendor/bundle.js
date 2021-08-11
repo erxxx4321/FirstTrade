@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "014d01c7173bac6514ce";
+/******/ 	var hotCurrentHash = "161ecbb1772357c937e0";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -877,7 +877,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/kaorinoie/Documents/gitHub/StockGame/StockGame/EasyStock/common/design/site.scss */"./EasyStock/common/design/site.scss");
+module.exports = __webpack_require__(/*! C:\Users\ChangDaze\Desktop\StockGame\StockGame\EasyStock\common\design\site.scss */"./EasyStock/common/design/site.scss");
 
 
 /***/ })
