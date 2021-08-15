@@ -1,0 +1,152 @@
+﻿@using FirstTrade_.Models.Services
+<script src="~/Scripts/Chart.min.js"></script>
+
+@model IEnumerable<FirstTrade_.Models.Services.StockVM2>
+
+@{
+    ViewBag.Title = "Test1";
+    var jsonId = Json.Encode(ViewBag.Id);
+    var jsonTime3 = Json.Encode(ViewBag.Time3);//好像都要轉成Json才能在Chart裡面用
+    var jsonErrDev = Json.Encode(Model);
+    var criteria = ViewBag.Criteria as RegistersCriteria;
+}
+
+<h2>Test1</h2>
+
+<style>
+
+    body {
+        background-color: #f1f1f1;
+    }
+
+    .container {
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .site-main {
+        background-color: #fff;
+    }
+
+    .site-main-inner::after {
+        content: "";
+        display: block; /**必要**/
+        clear: both;
+    }
+
+    .content {
+        height: 400px;
+        width: 70%;
+        background-color: #ddd;
+        float: left;
+    }
+
+    .sidebar {
+        height: 400px;
+        width: 30%;
+        background-color: #ccc;
+        float: right;
+    }
+</style>
+
+<div class="container site-main">
+
+    <div class="site-main-inner">
+
+        <div class="chart-container" style="position: relative; height:0vh; width:65vw">
+            <!--外面的height調距離，width調寬度-->
+            <canvas id="LineChart" style="height:400px; width:100%"></canvas><!--裡面的height調高度，width調??-->
+        </div>
+
+        <div class="sidebar">
+            <table>
+                <tr>
+                    <td>資金:</td>
+                    <td><input type="number" name="Money" value=1000000 readonly/></td>
+                </tr>
+                <tr>
+                    <td>損益:</td>
+                    <td><input type="number" name="Profit" value=0 readonly /></td>
+                </tr>
+            </table>
+            <form method="post" action="">
+                <table>
+                    <tr>
+                        <td>幾天後:</td>
+                        <td><input type="text" name="Name"></td>
+                    </tr>
+                    <tr>
+                        <td>目前天數:</td>
+                        <td><input type="text" name="Total" value="@ViewBag.Total" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" name="Search" /></td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<script>
+    var jsErrDev = @Html.Raw(jsonErrDev);
+    var ctx = document.getElementById("LineChart");
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels:@Html.Raw(jsonTime3),
+            datasets: [{
+                label: jsErrDev[0].dev,
+                data: jsErrDev[0].price,
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                fontSize: 20,
+                text: 'Min and Max Settings'
+                },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: '日期',
+                        fontSize: 15
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: '元/每股',
+                        fontSize: 15
+                    },
+                    ticks: {
+                        max: Math.round(jsErrDev[0].UpL*11/10),
+                        min: Math.round(jsErrDev[0].DownL * 9 / 10),
+                        stepSize: Math.round((jsErrDev[0].UpL - jsErrDev[0].DownL)*3/10),
+                        //reverse: true,
+                    }
+
+
+
+
+                }]
+            }
+        }
+    }
+    );
+</script>
+
+
+
