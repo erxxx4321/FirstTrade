@@ -6,15 +6,19 @@ namespace FirstTrade_.Models.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("stockprice")]
-    public partial class stockprice
+    [Table("customer")]
+    public partial class customer
     {
         public int id { get; set; }
 
-        [StringLength(50)]
-        public string 年月日 { get; set; }
+        public int? Cash { get; set; }
 
-        [Column("收盤價(元)")]
-        public double? 收盤價_元_ { get; set; }
+        public int? Position { get; set; }
+
+        public int? Profit { get; set; }
+
+        public int? BuyCost { get; set; }
+
+        public int? Status { get; set; }
     }
 }
