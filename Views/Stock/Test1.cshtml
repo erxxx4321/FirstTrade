@@ -1,12 +1,12 @@
 ﻿@using FirstTrade_.Models.Services
 <script src="~/Scripts/Chart.min.js"></script>
 
-@model IEnumerable<FirstTrade_.Models.Services.StockVM2>
+@model FirstTrade_.Models.Services.StockVM
 
 @{
     ViewBag.Title = "Test1";
     var jsonId = Json.Encode(ViewBag.Id);
-    var jsonTime3 = Json.Encode(ViewBag.Time3);//好像都要轉成Json才能在Chart裡面用
+    var jsonTime = Json.Encode(ViewBag.Time);//好像都要轉成Json才能在Chart裡面用
     var jsonErrDev = Json.Encode(Model);
 }
 
@@ -16,6 +16,8 @@
 
         <canvas id="LineChart" height="350px"></canvas><!--裡面的height調高度，width調??-->
         <form method="post" action="Test1" class="m-5">
+            <label>選擇股票:</label>
+            <input type="text" name="Stock123" value="" />
             <label>選擇日期:</label>
             <input type="date" name="Date123" value="" /><!--叫Date0時還不給binding...-->
             <button type="submit" class="btn btn-secondary btn-sm">提交</button>
@@ -101,12 +103,12 @@
             width: 60vw;
         }
     }
+
     @@media screen and (max-width: 768px) {
         #LineChart {
             width: 80vw;
         }
     }
-
 </style>
 
 
@@ -116,10 +118,10 @@
     var chart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels:@Html.Raw(jsonTime3),
+            labels:@Html.Raw(jsonTime),
             datasets: [{
-                label: jsErrDev[0].dev,
-                data: jsErrDev[0].price,
+                label: jsErrDev.stockname,
+                data: jsErrDev.price,
             }]
         },
         options: {
@@ -147,9 +149,9 @@
                         fontSize: 15
                     },
                     ticks: {
-                        max: Math.round(jsErrDev[0].UpL*11/10),
-                        min: Math.round(jsErrDev[0].DownL * 9 / 10),
-                        stepSize: Math.round((jsErrDev[0].UpL - jsErrDev[0].DownL)*3/10),
+                        max: Math.round(jsErrDev.UpL*11/10),
+                        min: Math.round(jsErrDev.DownL * 9 / 10),
+                        stepSize: Math.round((jsErrDev.UpL - jsErrDev.DownL)*3/10),
                         //reverse: true,
                     }
 

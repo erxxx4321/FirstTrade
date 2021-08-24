@@ -23,6 +23,134 @@ namespace FirstTrade_.Controllers
             return View(db.stockprices.ToList());
         }
 
+        public ActionResult Test1(RegistersCriteria inject, CashRelateVM injectmoney, DateTime? Date123, String Stock123)
+        {
+            #region 日期
+            var curdb = db.stockprices.ToList();
+            int ct;
+
+            if (!string.IsNullOrEmpty(Stock123))
+            {
+                curdb = curdb.Where(x => x.證券代碼 == Stock123).ToList();
+                inject.StartDate = curdb[0].id;
+            }
+            if (Date123 != null)
+            {
+                string SDate = Convert.ToDateTime(Date123).ToString("yyyy-MM-dd");
+                curdb = curdb.Where(x => x.年月日 == SDate).ToList();
+                inject.StartDate = curdb[0].id;
+            }
+            if (inject.Total > 0)
+            {
+                if (inject.Go > 0) ct = inject.Total + inject.Go;
+                else ct = inject.Total + 1;
+            }
+            else
+            {
+                ct = 10;
+            }
+
+            curdb = db.stockprices.Where(x => x.id >= inject.StartDate).Where(x => x.id < inject.StartDate + ct).ToList();
+            List<string> time = curdb.Select(x => Convert.ToDateTime(x.年月日)).Select(x => x.ToString("M/dd")).ToList();
+            //Datetime?沒有string多載來做日期格式，所以強制轉型
+            List<double?> price = curdb.Select(x => x.收盤價_元_).ToList();
+
+            ViewBag.Time = time;
+            ViewBag.Total = ct;
+            ViewBag.StartDate = inject.StartDate;
+
+            var tempp = new List<double?>();
+            foreach (double? item in price)
+            { tempp.Add(item); }
+
+            var combine = new StockVM
+            {
+                stockname = curdb[0].證券代碼,
+                price = tempp
+            };
+            combine.UpL = combine.price.Max();
+            combine.DownL = combine.price.Min();
+            combine.count = ct;
+            #endregion
+            #region 錢錢
+            customer customer;
+            if (injectmoney.Cash > 0)//有資料
+            {
+                customer = db.customers.Find(injectmoney.Cid);
+                if (customer.Position > 0)//檢查部位
+                {
+                    customer.Profit = Convert.ToInt32(price[price.Count() - 1] * 1000) - customer.BuyCost;
+                }
+                else if (customer.Position < 0)
+                {
+                    customer.Profit = customer.BuyCost - Convert.ToInt32(price[price.Count() - 1] * 1000);
+                }
+                else
+                {
+                    customer.Profit = 0;
+                }
+                if (injectmoney.Status == 1)//檢查策略
+                {
+                    if (customer.Position >= 0)//做多開倉
+                    {
+                        customer.Position += 1;
+                        customer.Status = 0;
+                        customer.BuyCost = Convert.ToInt32(price[price.Count() - 1] * 1000);//索引是從0開始所以要-1
+                        customer.Cash -= customer.BuyCost;
+                    }
+                    else//放空平倉
+                    {
+                        customer.Position += 1;
+                        customer.Status = 0;
+                        customer.BuyCost = null;
+                        customer.Cash += injectmoney.BuyCost + customer.Profit;
+                        //customer.Profit = null;
+                    }
+
+                }
+                else if (injectmoney.Status == -1)
+                {
+                    if (customer.Position <= 0)//做空開倉
+                    {
+                        customer.Position -= 1;
+                        customer.Status = 0;
+                        customer.BuyCost = Convert.ToInt32(price[price.Count() - 1] * 1000);
+                        customer.Cash -= customer.BuyCost;
+                    }
+                    else//做多平倉
+                    {
+                        customer.Position -= 1;
+                        customer.Status = 0;
+                        customer.BuyCost = null;
+                        customer.Cash += Convert.ToInt32(price[price.Count() - 1] * 1000);
+                        //customer.Profit = null;
+                    }
+
+                }
+
+                db.Entry(customer).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else//沒資料
+            {
+                db.customers.Add(new customer { Cash = 100000, Position = 0, Profit = 0, Status = 0 });
+                db.SaveChanges();
+                int id = db.customers.Select(x => x.id).Max();
+                customer = db.customers.Find(id);
+            }
+
+            ViewBag.Cid = customer.id;
+            ViewBag.Cash = customer.Cash;
+            ViewBag.Position = customer.Position;
+            ViewBag.Profit = customer.Profit;
+            ViewBag.Status = customer.Status;
+            ViewBag.BuyCost = customer.BuyCost;
+            #endregion
+            return View(combine);
+
+        }
+
+        /**
         public ActionResult Test1(RegistersCriteria inject, CashRelateVM injectmoney, DateTime? Date123)
         {
             #region 日期
@@ -164,6 +292,7 @@ namespace FirstTrade_.Controllers
             return View(combine);
 
         }
+        **/
         [HttpPost]
         public ActionResult Test2(DateTime Date)
         {

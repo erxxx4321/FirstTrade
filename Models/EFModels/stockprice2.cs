@@ -6,8 +6,7 @@ namespace FirstTrade_.Models.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("stockprice")]
-    public partial class stockprice
+    public partial class stockprice2
     {
         public int id { get; set; }
 
