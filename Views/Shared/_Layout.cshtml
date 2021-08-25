@@ -10,10 +10,10 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-fixed-top mb-3 bg-dark">
+    <div class="navbar navbar-fixed-top mb-3 ft-dark-bg pt-3 pb-3">
         <div class="container d-flex flex-row justify-content-start">
             <div>
-                @Html.ActionLink("FirstTrade!", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("FirstTrade!", "Index", "Home", new { area = "" }, new { @class = "h1 ft-light-text" })
             </div>
         </div>
     </div>
@@ -30,15 +30,63 @@
 </body>
 </html>
 <style>
+    /* Global */
     * {
         box-sizing: border-box;
         line-height: 1.4;
     }
+
+    body {
+        color: var(--black);
+    }
+
     a {
         text-decoration: none;
     }
+
     img {
         width: 100%;
         height: auto;
+    }
+
+    /* 全站主色系 */
+    :root {
+        --yellow: #ffe359;
+        --black: #3F3F3F;
+        --lightyellow: #FFEB85;
+        --lightblack: #5c5c5c;
+    }
+
+    .ft-btn {
+        background: var(--black);
+        color: var(--yellow);
+        border-radius: 4px;
+    }
+
+    .ft-btn:hover {
+        background: var(--lightblack);
+        color: var(--lightyellow);
+    }
+
+    .ft-dark-bg {
+        background: var(--black);
+    }
+
+    .ft-light-bg {
+        background: var(--yellow);
+    }
+
+    .ft-dark-text {
+        color: var(--black);
+    }
+
+    .ft-light-text {
+        color: var(--yellow);
+    }
+
+    .ft-light-text:hover {
+        color: var(--lightyellow);
+        text-decoration: none;
+        transition: 0.4s;
     }
 </style>
