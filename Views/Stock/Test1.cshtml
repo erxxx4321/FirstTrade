@@ -10,17 +10,20 @@
     var jsonErrDev = Json.Encode(Model);
 }
 
-<div class="d-flex flex-lg-row justify-content-lg-evenly flex-column  justify-content-center align-items-center mt-5">
+<div class="d-flex flex-lg-row justify-content-lg-evenly flex-column justify-content-center align-items-center mt-5">
     <div>
         <!--外面的height調距離(好像條外層空間可正可負)，width調寬度-->
-
-        <canvas id="LineChart" height="350px"></canvas><!--裡面的height調高度，width調??-->
-        <form method="post" action="Test1" class="m-5">
-            <label>選擇股票:</label>
-            <input type="text" name="Stock123" value="" />
-            <label>選擇日期:</label>
-            <input type="date" name="Date123" value="" /><!--叫Date0時還不給binding...-->
-            <button type="submit" class="btn btn-secondary btn-sm">提交</button>
+        <canvas id="LineChart" height="400"></canvas><!--裡面的height調高度，width調??-->
+        <form method="post" action="Test1" class="m-5 d-flex flex-row flex-wrap align-items-center">
+            <div class="me-3">
+                <label>選擇股票:</label>
+                <input type="text" name="Stock123" value="" />
+            </div>
+            <div class="me-3">
+                <label>選擇日期:</label>
+                <input type="date" name="Date123" value="" /><!--叫Date0時還不給binding...-->
+            </div>
+            <button type="submit" class="ft-btn">提交</button>
         </form>
     </div>
 
@@ -61,7 +64,7 @@
             <div class="mb-3">
                 <input type="text" name="StartDate" value="@ViewBag.StartDate" hidden />
             </div>
-            <button type="submit" class="btn btn-secondary btn-sm">提交</button>
+            <button type="submit" class="ft-btn">提交</button>
         </form>
     </div>
 
@@ -122,6 +125,9 @@
             datasets: [{
                 label: jsErrDev.stockname,
                 data: jsErrDev.price,
+                borderColor: '#ffe359',
+                backgroundColor: 'rgba(255, 227, 89, 0.4)',
+                pointBorderColor: '#3F3F3F',
             }]
         },
         options: {
@@ -154,10 +160,6 @@
                         stepSize: Math.round((jsErrDev.UpL - jsErrDev.DownL)*3/10),
                         //reverse: true,
                     }
-
-
-
-
                 }]
             }
         }
