@@ -17,7 +17,19 @@ namespace FirstTrade_.Models.EFModels
         [StringLength(50)]
         public string 年月日 { get; set; }
 
+        [Column("開盤價(元)")]
+        public double? 開盤價_元_ { get; set; }
+
         [Column("收盤價(元)")]
         public double? 收盤價_元_ { get; set; }
+
+        [Column("最低價(元)")]
+        public double? 最低價_元_ { get; set; }
+
+        [Column("最高價(元)")]
+        public double? 最高價_元_ { get; set; }
+
+        [Column("成交量(千股)")]
+        public double? 成交量_千股_ { get; set; }
     }
 }

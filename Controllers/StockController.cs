@@ -28,7 +28,6 @@ namespace FirstTrade_.Controllers
             #region 日期
             var curdb = db.stockprices.ToList();
             int ct;
-
             if (!string.IsNullOrEmpty(Stock123))
             {
                 curdb = curdb.Where(x => x.證券代碼 == Stock123).ToList();
@@ -47,93 +46,154 @@ namespace FirstTrade_.Controllers
             }
             else
             {
-                ct = 10;
+                ct = 50;
             }
 
             curdb = db.stockprices.Where(x => x.id >= inject.StartDate).Where(x => x.id < inject.StartDate + ct).ToList();
-            List<string> time = curdb.Select(x => Convert.ToDateTime(x.年月日)).Select(x => x.ToString("M/dd")).ToList();
-            //Datetime?沒有string多載來做日期格式，所以強制轉型
-            List<double?> price = curdb.Select(x => x.收盤價_元_).ToList();
 
-            ViewBag.Time = time;
+            List<string> dates = curdb.Select(x => x.年月日).ToList();
+
+            List<double?[]> data = curdb.Select(x => new double?[] { x.開盤價_元_, x.收盤價_元_, x.最低價_元_, x.最高價_元_, x.成交量_千股_ }).ToList();
+
+            List<double?> volumns = curdb.Select(x => x.成交量_千股_).ToList();
+
+            var dDisplay = new DDisplay { DDate = dates, DData = data, DVolumn = volumns };
+
+
             ViewBag.Total = ct;
             ViewBag.StartDate = inject.StartDate;
+            dDisplay.stockname = curdb[0].證券代碼;
 
-            var tempp = new List<double?>();
-            foreach (double? item in price)
-            { tempp.Add(item); }
-
-            var combine = new StockVM
-            {
-                stockname = curdb[0].證券代碼,
-                price = tempp
-            };
-            combine.UpL = combine.price.Max();
-            combine.DownL = combine.price.Min();
-            combine.count = ct;
             #endregion
+
             #region 錢錢
-            customer customer;
-            if (injectmoney.Cash > 0)//有資料
+            customer customer; //決定改變時才設定
+            int newprice = Convert.ToInt32(data[data.Count() - 1][0] * 1000); // 最新價格
+            int absip = Math.Abs(injectmoney.Position);
+            int absst = Math.Abs(injectmoney.Status);
+
+            if (injectmoney.Cash > 0)//有現金
             {
-                customer = db.customers.Find(injectmoney.Cid);
-                if (customer.Position > 0)//檢查部位
+                customer = db.customers.Find(injectmoney.Cid);//使用原本資料
+                //先結清原有部位損益
+                if (customer.Position != 0)
                 {
-                    customer.Profit = Convert.ToInt32(price[price.Count() - 1] * 1000) - customer.BuyCost;
+                    customer.Profit = (newprice - customer.BuyCost) * injectmoney.Position;//差價*部位(負負得正)
                 }
-                else if (customer.Position < 0)
-                {
-                    customer.Profit = customer.BuyCost - Convert.ToInt32(price[price.Count() - 1] * 1000);
-                }
-                else
+                else//原本沒部位
                 {
                     customer.Profit = 0;
                 }
-                if (injectmoney.Status == 1)//檢查策略
+
+                //損益確定後進行資料調整
+                if (injectmoney.Position != 0)// 有部位
                 {
-                    if (customer.Position >= 0)//做多開倉
+
+                    if (injectmoney.Position > 0) //正部位
                     {
-                        customer.Position += 1;
-                        customer.Status = 0;
-                        customer.BuyCost = Convert.ToInt32(price[price.Count() - 1] * 1000);//索引是從0開始所以要-1
-                        customer.Cash -= customer.BuyCost;
+                        if (injectmoney.Status > 0) // 加倉
+                        {
+                            customer.Cash = injectmoney.Cash - newprice * absst;
+                            customer.Position = injectmoney.Position + injectmoney.Status;
+                            customer.Profit = customer.Profit;//但要計算後的
+                            customer.BuyCost = (injectmoney.BuyCost * absip + newprice * absst) / (absip + absst);//(舊成本+新成本)/全部位 -> 平均成本
+                            customer.Status = 0;//最後會回歸0
+                        }
+                        else if (injectmoney.Status < 0) // 減倉
+                        {
+                            if (absip == absst)//平倉
+                            {
+                                customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absst + customer.Profit);//剩的現金+成本+最新損益，absst = absip
+                                customer.Position = injectmoney.Position + injectmoney.Status;//應該=0
+                                customer.Profit = 0;//損益結清至現金了
+                                customer.BuyCost = 0;//消掉
+                                customer.Status = 0;
+                            }
+                            else if (absip > absst)//沒減乾淨
+                            {
+                                customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absst + customer.Profit * absst / absip);//剩的現金+部分成本+最新部分損益
+                                customer.Position = injectmoney.Position + injectmoney.Status;//通用
+                                customer.Profit = customer.Profit * (absip - absst) / absip;//剩未結清部分 ->不能用（1-absst/absip）因為會變分數不能計算
+                                customer.BuyCost = injectmoney.BuyCost;//不變
+                                customer.Status = 0;
+                            }
+                            else if (absip < absst)//反向開倉
+                            {
+                                customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absip + customer.Profit) - (newprice * (absst - absip));//剩的錢+舊部位結清-新成本
+                                customer.Position = injectmoney.Position + injectmoney.Status;//通用
+                                customer.Profit = 0;//損益結清，新損益未出現
+                                customer.BuyCost = newprice;//新開始
+                                customer.Status = 0;
+                            }
+                        }
+
                     }
-                    else//放空平倉
+                    else if (injectmoney.Position < 0) //負部位
                     {
-                        customer.Position += 1;
-                        customer.Status = 0;
-                        customer.BuyCost = null;
-                        customer.Cash += injectmoney.BuyCost + customer.Profit;
-                        //customer.Profit = null;
+                        if (injectmoney.Status < 0) // 加倉
+                        {
+                            customer.Cash = injectmoney.Cash - newprice * absst;
+                            customer.Position = injectmoney.Position + injectmoney.Status;
+                            customer.Profit = customer.Profit;//但是要計算後的
+                            customer.BuyCost = (injectmoney.BuyCost * absip + newprice * absst) / (absip + absst);//(舊成本+新成本)/全部位 -> 平均成本，分母記得絕對值
+                            customer.Status = 0;//最後會回歸0
+                        }
+                        else if (injectmoney.Status > 0) // 減倉
+                        {
+                            if (absip == absst)//平倉
+                            {
+                                customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absst + customer.Profit);//剩的現金+成本+最新損益，absst = absip
+                                customer.Position = injectmoney.Position + injectmoney.Status;//通用
+                                customer.Profit = 0;//損益結清至現金了
+                                customer.BuyCost = 0;//消掉
+                                customer.Status = 0;
+                            }
+                            else if (absip > absst)//沒減乾淨
+                            {
+                                customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absst + customer.Profit * absst / absip);//剩的現金+部分成本+最新部分損益
+                                customer.Position = injectmoney.Position + injectmoney.Status;//通用
+                                customer.Profit = customer.Profit * (absip - absst) / absip;//剩未結清部分
+                                customer.BuyCost = injectmoney.BuyCost;//不變
+                                customer.Status = 0;
+                            }
+                            else if (absip < absst)//反向開倉
+                            {
+                                customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absip + customer.Profit) - (newprice * (absst - absip));//剩的錢+舊部位結清-新成本
+                                customer.Position = injectmoney.Position + injectmoney.Status;//通用
+                                customer.Profit = 0;//損益結清，新損益未出現
+                                customer.BuyCost = newprice;//新開始
+                                customer.Status = 0;
+                            }
+                        }
                     }
 
                 }
-                else if (injectmoney.Status == -1)
+                else if (injectmoney.Position == 0)//沒部位
                 {
-                    if (customer.Position <= 0)//做空開倉
+                    if (injectmoney.Status > 0)//建立正部位
                     {
-                        customer.Position -= 1;
+                        customer.Cash = injectmoney.Cash - newprice * absst;
+                        customer.Position = injectmoney.Position + injectmoney.Status;
+                        customer.Profit = 0;
+                        customer.BuyCost = newprice;//新開始
                         customer.Status = 0;
-                        customer.BuyCost = Convert.ToInt32(price[price.Count() - 1] * 1000);
-                        customer.Cash -= customer.BuyCost;
                     }
-                    else//做多平倉
+                    else if (injectmoney.Status < 0)//建立負部位
                     {
-                        customer.Position -= 1;
+                        customer.Cash = injectmoney.Cash - newprice * absst;
+                        customer.Position = customer.Position + injectmoney.Status;
+                        customer.Profit = 0;
+                        customer.BuyCost = newprice;//新開始
                         customer.Status = 0;
-                        customer.BuyCost = null;
-                        customer.Cash += Convert.ToInt32(price[price.Count() - 1] * 1000);
-                        //customer.Profit = null;
                     }
-
                 }
 
                 db.Entry(customer).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            else//沒資料
+            else//沒現金
             {
-                db.customers.Add(new customer { Cash = 100000, Position = 0, Profit = 0, Status = 0 });
+                db.customers.Add(new customer { Cash = 1000000, Position = 0, Profit = 0, Status = 0 });
                 db.SaveChanges();
                 int id = db.customers.Select(x => x.id).Max();
                 customer = db.customers.Find(id);
@@ -146,163 +206,10 @@ namespace FirstTrade_.Controllers
             ViewBag.Status = customer.Status;
             ViewBag.BuyCost = customer.BuyCost;
             #endregion
-            return View(combine);
 
+            return View(dDisplay);
         }
 
-        /**
-        public ActionResult Test1(RegistersCriteria inject, CashRelateVM injectmoney, DateTime? Date123)
-        {
-            #region 日期
-
-            int a;
-            if (Date123 != null)
-            {
-                int sd = 0;
-                DateTime Date = Convert.ToDateTime(Date123);
-                string SDate = Date.ToString("yyyy-MM-dd");
-                List<stockprice> tempd = db.stockprices.Where(x => x.年月日 == SDate).ToList();//問助教好了
-                stockprice StartDate = tempd[0];
-                sd = StartDate.id;
-                inject.StartDate = sd;
-            }
-            if (inject.Total > 0)
-            {
-                if (inject.Name > 0)
-                {
-                    a = inject.Total + inject.Name;
-                }
-                else
-                {
-                    a = inject.Total + 1;
-                }
-            }
-            else
-            {
-                a = 10;
-            }
-            var dball = db.stockprices.ToList();
-            List<int> Id = dball.Where(x => x.id <= inject.StartDate + a && x.id >= inject.StartDate).Select(x => x.id).ToList();
-            //List<DateTime?> time = dball.Where(x => x.id <= a).Select(x => x.年月日).ToList();
-            List<string> test = dball.Where(x => x.id <= inject.StartDate + a && x.id >= inject.StartDate).Select(x => x.年月日).ToList();
-            List<DateTime> time2 = dball.Where(x => x.id <= inject.StartDate + a && x.id >= inject.StartDate).Select(x => Convert.ToDateTime(x.年月日)).ToList();//Datetime?沒有string多載來做日期格式，所以強制轉型
-            List<string> time3 = time2.Select(x => x.ToString("M/dd")).ToList();
-            List<double?> price = dball.Where(x => x.id <= inject.StartDate + a && x.id >= inject.StartDate).Select(x => x.收盤價_元_).ToList();
-
-            ViewBag.Time3 = time3;
-            ViewBag.Total = a;
-            ViewBag.StartDate = inject.StartDate;
-
-            List<StockVM2> combine = new List<StockVM2>
-            {
-                new StockVM2
-                {
-                    dev = "台積電2330",
-                    price = new List<double?>()
-                },
-            };
-            foreach (double? item in price)
-            {
-                combine[0].price.Add(item);
-            }
-
-            combine[0].UpL = combine[0].price.Max();
-            combine[0].DownL = combine[0].price.Min();
-            combine[0].count = a;
-            #endregion
-            customer customer;
-            #region 錢錢
-            if (injectmoney.Cash > 0)//有資料
-            {
-                customer = db.customers.Find(injectmoney.Cid);
-                if (customer.Position > 0)//檢查部位
-                {
-                    customer.Profit = Convert.ToInt32(price[price.Count() - 1] * 1000) - customer.BuyCost;
-                }
-                else if (customer.Position < 0)
-                {
-                    customer.Profit = customer.BuyCost - Convert.ToInt32(price[price.Count() - 1] * 1000);
-
-                }
-                else
-                {
-                    customer.Profit = 0;
-                }
-                if (injectmoney.Status == 1)//檢查策略
-                {
-                    if (customer.Position >= 0)//做多開倉
-                    {
-
-                        customer.Position += 1;
-                        customer.Status = 0;
-                        customer.BuyCost = Convert.ToInt32(price[price.Count() - 1] * 1000);//索引是從0開始所以要-1
-                        customer.Cash -= customer.BuyCost;
-                    }
-                    else//放空平倉
-                    {
-                        customer.Position += 1;
-                        customer.Status = 0;
-                        customer.BuyCost = null;
-                        customer.Cash += injectmoney.BuyCost + customer.Profit;
-                        //customer.Profit = null;
-                    }
-
-                }
-                else if (injectmoney.Status == -1)
-                {
-                    if (customer.Position <= 0)//做空開倉
-                    {
-
-                        customer.Position -= 1;
-                        customer.Status = 0;
-                        customer.BuyCost = Convert.ToInt32(price[price.Count() - 1] * 1000);
-                        customer.Cash -= customer.BuyCost;
-                    }
-                    else//做多平倉
-                    {
-                        customer.Position -= 1;
-                        customer.Status = 0;
-                        customer.BuyCost = null;
-                        customer.Cash += Convert.ToInt32(price[price.Count() - 1] * 1000);
-                        //customer.Profit = null;
-                    }
-
-                }
-
-                db.Entry(customer).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            else//沒資料
-            {
-                db.customers.Add(new customer { Cash = 100000, Position = 0, Profit = 0, Status = 0 });
-                db.SaveChanges();
-                int id = db.customers.Select(x => x.id).Max();
-                customer = db.customers.Find(id);
-
-            }
-
-            ViewBag.Cid = customer.id;
-            ViewBag.Cash = customer.Cash;
-            ViewBag.Position = customer.Position;
-            ViewBag.Profit = customer.Profit;
-            ViewBag.Status = customer.Status;
-            ViewBag.BuyCost = customer.BuyCost;
-
-            #endregion
-            return View(combine);
-
-        }
-        **/
-        [HttpPost]
-        public ActionResult Test2(DateTime Date)
-        {
-            ViewBag.Date = Date;
-            string SDate = Date.ToString("yyyy-MM-dd");
-            List<stockprice> tempd = db.stockprices.Where(x => x.年月日 == SDate).ToList();//問助教好了
-            stockprice StartDate = tempd[0];
-
-            return View();
-        }
 
         // GET: Stock/Details/5
         public ActionResult Details(int? id)
