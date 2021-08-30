@@ -3,17 +3,139 @@
     ViewBag.Title = "SignUp";
 }
 
-<h2>註冊</h2>
+<div class="container-fluid">
+    <div class="row main-content text-center">
+        <div class="col-md-4 text-center company__info ft-dark-bg">
+            <h4 class="company_title ft-light-text">FirstTrade!</h4>
+        </div>
+        <div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+            <div class="container-fluid">
+                <div class="row">
+                    <h3 class="ft-dark-text p-4">註冊</h3>
+                </div>
+                <div class="row">
+                    <form class="form-group" action="action.js">
+                        <div>
+                            <span class="h5 me-1">您的身分是 </span>
+                            <span>
+                                <input type="radio" name="user" id="user" value="1" />
+                                <label for="user">一般</label>
+                                <input type="radio" name="user" id="teacher" value="2" />
+                                <label for="teacher">老師</label>
+                                <input type="radio" name="user" id="student" value="3" />
+                                <label for="student">學生</label>
+                            </span>
+                        </div>
+                        <div class="row">
+                            <input type="text" name="username" id="username" class="form__input" placeholder="請輸入帳號">
+                        </div>
+                        <div class="row">
+                            <input type="password" name="password" id="password" class="form__input" placeholder="請輸入密碼">
+                        </div>
+                        <div class="row d-block">
+                            <input type="submit" value="提交" class="btn">
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <p>已有帳號?<a href="#" class="ft-light-text ms-2">登入會員</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    body {
+        background: var(--lightblack);
+    }
+    .main-content {
+        width: 50%;
+        border-radius: 20px;
+        box-shadow: 0 5px 5px rgba(0,0,0,.4);
+        margin: 5em auto;
+        display: flex;
+    }
 
-<form action="action.js">
-    <h4>身分</h4>
-    <input type="radio" name="user" value="1" /> 一般
-    <input type="radio" name="user" value="2" /> 教師
-    <input type="radio" name="user" value="3" /> 學生
-    <h4>帳號</h4>
-    <input type="text" placeholder="請輸入帳號" />
-    <h4>密碼</h4>
-    <input type="password" placeholder="請輸入密碼" />
-    <input type="submit" value="註冊" />
-</form>
+    .company__info {
+        background-color: #008080;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: #fff;
+    }
+
+    .fa-android {
+        font-size: 3em;
+    }
+
+    @@media screen and (max-width: 640px) {
+        .main-content {
+            width: 90%;
+        }
+
+        .company__info {
+            display: none;
+        }
+
+        .login_form {
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+        }
+    }
+
+    @@media screen and (min-width: 642px) and (max-width:800px) {
+        .main-content {
+            width: 70%;
+        }
+    }
+
+    .login_form {
+        background-color: #fff;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        border-top: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+    }
+
+    form {
+        padding: 0 2em;
+    }
+
+    .form__input {
+        width: 100%;
+        border: 0px solid transparent;
+        border-radius: 0;
+        border-bottom: 1px solid #aaa;
+        padding: 1em .5em .5em;
+        padding-left: 2em;
+        outline: none;
+        margin: 0.8em auto;
+        transition: all .5s ease;
+    }
+
+    .form__input:focus {
+        border-bottom-color: var(--yellow);
+        box-shadow: 0 0 5px rgba(255, 227, 89,.4);
+        border-radius: 4px;
+    }
+
+    .btn {
+        transition: all .5s ease;
+        width: 70%;
+        border-radius: 30px;
+        color: var(--yellow);
+        font-weight: 600;
+        background-color: #fff;
+        border: 1px solid var(--yellow);
+        margin-top: 1.5em;
+        margin-bottom: 1em;
+    }
+
+    .btn:hover, .btn:focus {
+        background-color: var(--lightyellow);
+        color: #fff;
+    }
+</style>
 
