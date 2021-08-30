@@ -135,6 +135,7 @@
     </Compile>
     <Compile Include="Models\EFModels\customer.cs" />
     <Compile Include="Models\EFModels\Model1.cs" />
+    <Compile Include="Models\EFModels\recordprofit.cs" />
     <Compile Include="Models\EFModels\stockprice.cs" />
     <Compile Include="Models\Services\DDisplay.cs" />
     <Compile Include="Models\Services\RegistersCriteria.cs" />

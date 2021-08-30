@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [股價]    Script Date: 2021/8/26 下午 05:10:00 ******/
+/****** Object:  Database [股價]    Script Date: 2021/8/30 下午 01:52:23 ******/
 CREATE DATABASE [股價]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -82,12 +82,12 @@ ALTER DATABASE [股價] SET QUERY_STORE = OFF
 GO
 USE [股價]
 GO
-/****** Object:  User [testlogin]    Script Date: 2021/8/26 下午 05:10:00 ******/
+/****** Object:  User [testlogin]    Script Date: 2021/8/30 下午 01:52:23 ******/
 CREATE USER [testlogin] FOR LOGIN [testlogin] WITH DEFAULT_SCHEMA=[dbo]
 GO
 ALTER ROLE [db_owner] ADD MEMBER [testlogin]
 GO
-/****** Object:  Table [dbo].[customer]    Script Date: 2021/8/26 下午 05:10:01 ******/
+/****** Object:  Table [dbo].[customer]    Script Date: 2021/8/30 下午 01:52:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -105,7 +105,28 @@ CREATE TABLE [dbo].[customer](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[stockprice]    Script Date: 2021/8/26 下午 05:10:01 ******/
+/****** Object:  Table [dbo].[recordprofit]    Script Date: 2021/8/30 下午 01:52:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[recordprofit](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[userid] [int] NULL,
+	[stocknumber] [nvarchar](10) NULL,
+	[direction] [nvarchar](1) NULL,
+	[buycost] [int] NULL,
+	[sellprice] [int] NULL,
+	[position] [int] NULL,
+	[profit] [int] NULL,
+	[date] [nvarchar](20) NULL,
+ CONSTRAINT [PK_recordprofit] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[stockprice]    Script Date: 2021/8/30 下午 01:52:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -525,7 +546,277 @@ INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]
 GO
 INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (199, 1000000, 0, 0, NULL, 0)
 GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (200, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (201, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (202, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (203, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (204, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (205, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (206, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (207, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (208, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (209, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (210, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (211, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (212, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (213, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (214, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (215, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (216, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (217, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (218, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (219, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (220, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (221, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (222, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (223, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (224, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (225, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (226, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (227, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (228, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (229, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (230, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (231, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (232, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (233, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (234, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (235, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (236, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (237, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (238, 993500, 0, 0, 0, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (239, 993500, 0, 0, 0, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (240, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (241, 1003000, 0, 0, 0, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (242, 887000, -1, 0, 113000, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (243, 1016500, 0, 0, 0, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (244, 904500, 1, 5500, 95500, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (245, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (246, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (247, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (248, 1015000, 0, 0, 0, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (249, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (250, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (251, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (252, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (253, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (254, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (255, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (256, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (257, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (258, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (259, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (260, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (261, 892000, 1, 0, 108000, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (262, 1000000, 0, 0, 0, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (263, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (264, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (265, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (266, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (267, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (268, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (269, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (270, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (271, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (272, 995000, 0, 0, 0, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (273, 993500, 0, 0, 0, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (274, 987000, 0, 0, 0, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (275, 993500, 0, 0, 0, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (276, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (277, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (278, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (279, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (280, 987000, 0, 0, 0, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (281, 1003500, 0, 0, 0, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (282, 997000, 0, 0, 0, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (283, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (284, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (285, 1000000, 0, 0, NULL, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (286, 892500, 1, 0, 114000, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (287, 1005500, 0, 0, 0, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (288, 999000, 0, 0, 0, 0)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (289, 983000, 0, 0, 0, 0)
+GO
 SET IDENTITY_INSERT [dbo].[customer] OFF
+GO
+SET IDENTITY_INSERT [dbo].[recordprofit] ON 
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (1, 272, N'2330', N'多', 113000, 106500, 1, -6500, N'2000-09-22')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (2, 272, N'2330', N'空', 108000, 106500, 1, 1500, N'2000-09-26')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (3, 273, N'2330', N'多', 113000, 106500, 1, -6500, N'2000-09-22')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (4, 274, N'2330', N'多', 113000, 106500, 1, -6500, N'2000-09-22')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (5, 274, N'2330', N'多', 108000, 106500, 1, -1500, N'2000-09-26')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (6, 274, N'2330', N'空', 112500, 111000, 1, 1500, N'2000-09-28')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (7, 274, N'2330', N'多', 106500, 100000, 1, -6500, N'2000-09-30')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (8, 275, N'2330', N'多', 113000, 106500, 1, -6500, N'2000-09-22')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (9, 275, N'2330', N'多', 108000, 106500, 1, -1500, N'2000-09-26')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (10, 275, N'2330', N'空', 112500, 111000, 1, 1500, N'2000-09-28')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (11, 280, N'2330', N'多', 113000, 106500, 1, -6500, N'2000-09-22')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (12, 280, N'2330', N'多', 108000, 106500, 1, -1500, N'2000-09-26')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (13, 280, N'2330', N'空', 112500, 111000, 1, 1500, N'2000-09-28')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (14, 280, N'2330', N'多', 106500, 100000, 1, -6500, N'2000-09-30')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (15, 281, N'2330', N'空', 113000, 106500, 1, 6500, N'2000-09-22')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (16, 281, N'2330', N'空', 108000, 106500, 1, 1500, N'2000-09-26')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (17, 281, N'2330', N'多', 112500, 111000, 1, -1500, N'2000-09-28')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (18, 281, N'2330', N'多', 106500, 100000, 1, -6500, N'2000-09-30')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (19, 281, N'2330', N'多', 0, 100000, 1, 0, N'2000-09-30')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (20, 281, N'2330', N'多', 100000, 97000, 1, -3000, N'2000-10-03')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (21, 282, N'2330', N'多', 113000, 106500, 1, -6500, N'2000-09-22')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (22, 282, N'2330', N'多', 108000, 106500, 1, -1500, N'2000-09-26')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (23, 282, N'2330', N'多', 112500, 111000, 1, -1500, N'2000-09-28')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (24, 282, N'2330', N'空', 106500, 100000, 1, 6500, N'2000-09-30')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (25, 286, N'2330', N'多', 97500, 108000, 1, 10500, N'2000-11-03')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (26, 286, N'2330', N'多', 109500, 105500, 1, -4000, N'2000-11-06')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (27, 287, N'2330', N'多', 95500, 101000, 1, 5500, N'2000-11-01')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (28, 287, N'2330', N'多', 97500, 108000, 1, 10500, N'2000-11-03')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (29, 287, N'2330', N'多', 0, 108000, 1, 0, N'2000-11-03')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (30, 287, N'2330', N'多', 0, 108000, 1, 0, N'2000-11-03')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (31, 287, N'2330', N'多', 0, 108000, 1, 0, N'2000-11-03')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (32, 287, N'2330', N'多', 0, 108000, 1, 0, N'2000-11-03')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (33, 287, N'2330', N'多', 0, 108000, 1, 0, N'2000-11-03')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (34, 287, N'2330', N'多', 0, 108000, 1, 0, N'2000-11-03')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (35, 287, N'2330', N'多', 0, 108000, 1, 0, N'2000-11-03')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (36, 287, N'2330', N'多', 0, 108000, 1, 0, N'2000-11-03')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (37, 287, N'2330', N'多', 0, 108000, 1, 0, N'2000-11-03')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (38, 287, N'2330', N'多', 0, 108000, 1, 0, N'2000-11-03')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (39, 288, N'2330', N'多', 95500, 101000, 1, 5500, N'2000-11-01')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (40, 289, N'2330', N'空', 95500, 101000, 1, -5500, N'2000-11-01')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (41, 289, N'2330', N'空', 97500, 108000, 1, -10500, N'2000-11-03')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (42, 289, N'2330', N'空', 109500, 105500, 1, 4000, N'2000-11-06')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (43, 289, N'2330', N'空', 114000, 119000, 1, -5000, N'2000-11-08')
+GO
+SET IDENTITY_INSERT [dbo].[recordprofit] OFF
 GO
 SET IDENTITY_INSERT [dbo].[stockprice] ON 
 GO

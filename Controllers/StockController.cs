@@ -101,6 +101,11 @@ namespace FirstTrade_.Controllers
                         }
                         else if (injectmoney.Status < 0) // 減倉
                         {
+                            ViewBag.recordd = "多";
+                            ViewBag.recordc = customer.BuyCost;
+                            ViewBag.recordday = dates[dates.Count() - 1];
+                            ViewBag.recordstock = dDisplay.stockname;
+                            int? tempp = customer.Profit;
                             if (absip == absst)//平倉
                             {
                                 customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absst + customer.Profit);//剩的現金+成本+最新損益，absst = absip
@@ -125,6 +130,13 @@ namespace FirstTrade_.Controllers
                                 customer.BuyCost = newprice;//新開始
                                 customer.Status = 0;
                             }
+
+                            ViewBag.records = newprice;
+                            if (absst > absip) { ViewBag.recordp = absip; }
+                            else if (absst <= absip) { ViewBag.recordp = absst; }
+                            ViewBag.recordf = tempp - customer.Profit;
+                            db.recordprofits.Add(new recordprofit { userid = injectmoney.Cid, stocknumber = ViewBag.recordstock, direction = ViewBag.recordd, buycost = ViewBag.recordc, sellprice = ViewBag.records, position = ViewBag.recordp, profit = ViewBag.recordf, date = ViewBag.recordday });
+                            db.SaveChanges();
                         }
 
                     }
@@ -140,6 +152,11 @@ namespace FirstTrade_.Controllers
                         }
                         else if (injectmoney.Status > 0) // 減倉
                         {
+                            ViewBag.recordd = "空";
+                            ViewBag.recordc = customer.BuyCost;
+                            ViewBag.recordday = dates[dates.Count() - 1];
+                            ViewBag.recordstock = dDisplay.stockname;
+                            int? tempp = customer.Profit;
                             if (absip == absst)//平倉
                             {
                                 customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absst + customer.Profit);//剩的現金+成本+最新損益，absst = absip
@@ -163,7 +180,15 @@ namespace FirstTrade_.Controllers
                                 customer.Profit = 0;//損益結清，新損益未出現
                                 customer.BuyCost = newprice;//新開始
                                 customer.Status = 0;
+
                             }
+
+                            ViewBag.records = newprice;
+                            if (absst > absip) { ViewBag.recordp = absip; }
+                            else if (absst <= absip) { ViewBag.recordp = absst; }
+                            ViewBag.recordf = tempp - customer.Profit;
+                            db.recordprofits.Add(new recordprofit { userid = injectmoney.Cid, stocknumber = ViewBag.recordstock, direction = ViewBag.recordd, buycost = ViewBag.recordc, sellprice = ViewBag.records, position = ViewBag.recordp, profit = ViewBag.recordf, date = ViewBag.recordday });
+                            db.SaveChanges();
                         }
                     }
 
@@ -206,6 +231,11 @@ namespace FirstTrade_.Controllers
             ViewBag.Status = customer.Status;
             ViewBag.BuyCost = customer.BuyCost;
             #endregion
+
+            List<recordprofit> recordstates = db.recordprofits.Where(x => x.userid == injectmoney.Cid).ToList();
+            recordstates.Reverse();//不用=，直接影響?所以要注意?
+            ViewBag.recordstates = recordstates;
+            ViewBag.recordlength = recordstates.Count();
 
             return View(dDisplay);
         }

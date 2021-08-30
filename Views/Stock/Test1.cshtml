@@ -5,6 +5,8 @@
 
 @{
     var jsonErrDev = Json.Encode(Model);
+    var recordstates = ViewBag.recordstates;
+    var recordlength = ViewBag.recordlength;
 }
 
 <div class="d-flex flex-lg-row justify-content-lg-evenly flex-column justify-content-center align-items-center mt-5">
@@ -65,9 +67,130 @@
             <button type="submit" class="ft-btn">提交</button>
         </form>
     </div>
-
     <div id="stockInfo" class="circle ft-btn">
         <a>?</a>
+    </div>
+</div>
+
+<div class="container" style="display:flex; flex-wrap:wrap; height:140px; border:solid; width:500px; padding:0px; justify-content:center; margin-left:0; margin-top:10px; margin-bottom:10px;text-align:center">
+    <div class="box-0" style="padding:5px; width:60px; ">
+        <label>股票</label>
+        @if (recordlength <= 3)
+        {
+            foreach (var item in recordstates)
+            {
+                <p>@item.stocknumber</p>
+            }
+        }
+        else if (recordlength > 3)
+        {
+            for (var i = 0; i <= 2; i++)
+            {
+                <p>@recordstates[i].stocknumber</p>
+            }
+        }
+    </div>
+    <div class="box-1" style="padding:5px; width:50px; ">
+        <label>多空</label>
+        @if (recordlength <= 3)
+        {
+            foreach (var item in recordstates)
+            {
+                <p>@item.direction</p>
+            }
+        }
+        else if (recordlength > 3)
+        {
+            for (var i = 0; i <= 2; i++)
+            {
+                <p>@recordstates[i].direction</p>
+            }
+        }
+    </div>
+    <div class="box-2" style="padding:5px; width:80px">
+        <label>買價</label>
+        @if (recordlength <= 3)
+        {
+            foreach (var item in recordstates)
+            {
+                <p>@item.buycost</p>
+            }
+        }
+        else if (recordlength > 3)
+        {
+            for (var i = 0; i <= 2; i++)
+            {
+                <p>@recordstates[i].buycost</p>
+            }
+        }
+    </div>
+    <div class="box-3" style="padding:5px; width:80px">
+        <label>賣價</label>
+        @if (recordlength <= 3)
+        {
+            foreach (var item in recordstates)
+            {
+                <p>@item.sellprice</p>
+            }
+        }
+        else if (recordlength > 3)
+        {
+            for (var i = 0; i <= 2; i++)
+            {
+                <p>@recordstates[i].sellprice</p>
+            }
+        }
+    </div>
+    <div class="box-4" style="padding:5px; width:50px">
+        <label>部位</label>
+        @if (recordlength <= 3)
+        {
+            foreach (var item in recordstates)
+            {
+                <p>@item.position</p>
+            }
+        }
+        else if (recordlength > 3)
+        {
+            for (var i = 0; i <= 2; i++)
+            {
+                <p>@recordstates[i].position</p>
+            }
+        }
+    </div>
+    <div class="box-5" style="padding:5px; width:50px">
+        <label>損益</label>
+        @if (recordlength <= 3)
+        {
+            foreach (var item in recordstates)
+            {
+                <p>@item.profit</p>
+            }
+        }
+        else if (recordlength > 3)
+        {
+            for (var i = 0; i <= 2; i++)
+            {
+                <p>@recordstates[i].profit</p>
+            }
+        }
+    </div>
+    <div class="box-6" style="padding:5px; width:120px; ">
+        <label>日期</label>
+        @if (recordlength <= 3)
+        {
+            foreach (var item in recordstates)
+            {
+                <p>@item.date</p>
+            }
+        }
+        else if (recordlength > 3)
+        {
+            for (var i = 0; i <= 2; i++)
+            {
+                <p>@recordstates[i].date</p>
+            }
+        }
     </div>
 </div>
 
