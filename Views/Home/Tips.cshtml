@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "Tips";
+}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <h1 align="center">股市小知識</h1>
+    <div class="container p-3 my-3 border">
+        <ul>
+            <li>
+                <h2>什麼時間交易?</h2>
+                <p>星期一至五，交易時間為9:00-13:30，國定假日不開市。</p>
+            </li>
+        </ul>
+    </div>
+    <div class="container p-3 my-3 border">
+        <ul>
+            <li>
+                <h2>單位是一張還是一股?</h2>
+                <p style="color:red;">一張股票=1000股</p>
+                <p><strong>整股交易</strong> : 以<strong>一張</strong>為單位，1000股。 </p>
+                <p><strong>零股交易</strong> : 以<strong>一股</strong>為單位，1~999股，一般小資族若資金較少可選擇零股交易。 <a href="http://www.cmoney.tw/notes/note-detail.aspx?nid=6725" class="text-warning">零股這樣買</a></p>
+                <p>市面上看到的價格都是一股的價格，</p>
+                <p>例如台積電(2330)590元，指的是台積電一股590元，若要買一張則是要590元x1000股=590,000元。 </p>
+            </li>
+        </ul>
+    </div>
+    <div class="container p-3 my-3 border">
+        <ul>
+            <li>
+                <h2>什麼時間交割付款?</h2>
+                <p style="color:red;"> T+2 制度</p>
+                <p>不是當下一買到股票就交割付款，而是在交易當天<strong style="color:red;">加兩個工作天</strong>的早上10點交割付款。</p>
+                <p>例如星期一買的股票，就會在星期三早上10點交割付款；</p>
+                <p>星期五買的股票，就會在下星期二的早上10點交割付款。</p>
+            </li>
+        </ul>
+    </div>
+    <div class="container p-3 my-3 border">
+        <ul>
+            <li>
+                <h2>紅跟綠代表什麼?</h2>
+                <p>在台股<strong style="color:red;">紅色代表漲</strong>，<strong style="color:green;">綠色代表跌</strong>，與美股相反。</p>
+            </li>
+        </ul>
+    </div>
+    <div class="container p-3 my-3 border">
+        <ul>
+            <li>
+                <h2>什麼是漲停、跌停?</h2>
+                <blockquote>
+                    <p>台股一日漲跌幅限制為<strong style="color:red;">10%</strong>，是根據前一天的收盤價來計算。</p>
+                    <p>例如台積電(2330)前一天收盤價為590元，</p>
+                    <p>則今日漲跌幅限制</p>
+                    <p>最高漲停價=590+(590x10%)=590+59=649元，</p>
+                    <p>最低跌停價=590-(590x10%)=590-59=531元。</p>
+                </blockquote>
+            </li>
+        </ul>
+    </div>
+    <div class="container p-3 my-3 border">
+        <ul>
+            <li>
+                <h2>有哪些交易成本?</h2>
+                <blockquote>
+                    <p>  1. <strong>手續費</strong> : <strong>買進</strong>與<strong>賣出</strong>股票時需給券商，一般為<strong style="color:red;">0.1425%</strong>，但通常會依據券商的手續費優惠而有所不同。</p>
+                    <blockquote>
+                        <p>例如買進一張10元股票，手續費=10元x1000股x0.1425%=14元(四捨五入)，一般來說手續費未滿20元以20元計收；</p>
+                        <p>若賣出一張15元股票，手續費=15元x1000股x0.1425%=21元(四捨五入)。</p>
+                    </blockquote>
+                    <p>2. <strong>證券交易稅</strong> : <strong>賣出</strong>股票時需給政府，為<strong style="color:red;">0.3%</strong>，</p>
+                </blockquote>
+                <blockquote>
+                    <p>例如賣出一張10元的股票，證交稅為10元x1000股x0.3%=30元。</p>
+                </blockquote>
+            </li>
+        </ul>
+    </div>
+    <div class="container p-3 my-3 border">
+        <ul>
+            <li>
+                <h2>股市中的三大法人是誰?</h2>
+                <p>1. <strong>外資</strong> : 國外投資機構/投資人</p>
+                <p>2. <strong>投信</strong> : 國內基金公司</p>
+                <p>3. <strong>自營商</strong> : 國內證券商</p>
+            </li>
+        </ul>
+    </div>
+    <div class="container p-3 my-3 border">
+        <ul>
+            <li>
+                <h2>什麼是多與空?</h2>
+                <p><strong>多頭</strong> : 市場情況好，預期股價上漲，買進股票。</p>
+                <p>常用詞 → 看多(預期)、做多(行動)、牛市(bull)</p>
+                <p><strong>空頭</strong> : 市場情況不好，預期股票下跌，賣出股票。</p>
+                <p>常用詞 → 看空(預期)、做/放空(行動)、熊市(bear)</p>
+            </li>
+        </ul>
+    </div>
+    <div class="container p-3 my-3 border">
+        <ul>
+            <li>
+                <h2>常見的分析方式</h2>
+                <p>1. <strong><a href="https://www.cmoney.tw/learn/course/0520/topic/678" class="text-secondary">基本面</a></strong>: 以公司的基本資料來分析，例如財務報表、營運狀況、產業環境、未來發展等等。</p>
+                <p>2. <strong><a href="https://www.cmoney.tw/learn/course/technicals/topic/475" class="text-secondary">技術面</a></strong> : 以過去歷史資料線圖來分析未來走勢，</p>
+                <blockquote>
+                    <p>例如<a href="http://www.cmoney.tw/notes/note-detail.aspx?nid=6282">K線</a>、<a href="https://www.cmoney.tw/learn/course/cmoney/topic/136">均線</a>、<a href="https://www.cmoney.tw/learn/course/technicals/topic/490">RSI</a>、<a href="https://www.cmoney.tw/learn/course/technicals/topic/484">KD指標</a>、<a href="https://www.cmoney.tw/learn/course/technicals/topic/750">MACD</a>、<a href="https://www.cmoney.tw/learn/course/technicalanalysisfast/topic/1811">黃金交叉</a>、<a href="https://www.cmoney.tw/learn/course/technicalanalysisfast/topic/1844">死亡交叉</a>等等。 </p>
+                </blockquote>
+                <p>3. <strong><a href="https://www.cmoney.tw/learn/course/michelle/topic/1245" class="text-secondary">籌碼面</a></strong> : 分析大戶的動向，大戶指的是對於股價有強大影響力的公司或人，也稱為主力，</p>
+                <blockquote>
+                    <p>例如三大法人、內部關係人、大股東等等。</p>
+                </blockquote>
+            </li>
+        </ul>
+    </div>
+    <div class="container p-3 my-3 border">
+        <ul>
+            <li>
+                <h2>掛單類型</h2>
+                <p>1. 下單價格類別</p>
+                <blockquote>
+                    <p><strong>限價</strong> : 自行指定成交價格 </p>
+                    <p><strong>市價</strong> : 根據市場當下股票的成交價格</p>
+                </blockquote>
+                <p>2. 下單成交類別 </p>
+                <blockquote>
+                    <p><strong>ROD</strong>(Rest of Day) : 常見的預設掛單方式，當日皆有效，到收盤前沒成交就自動刪除。</p>
+                    <p><strong>IOC</strong>(Immediate or Cancel) : 有成交的就成交，剩下沒成交的就立刻刪除。</p>
+                    <p><strong>FOK</strong>(Fill or Kill) : 要不就全部都成交，不然就全部都刪除。</p>
+                </blockquote>
+            </li>
+        </ul>
+    </div>
+    <div class="container p-3 my-3 border">
+        <h4><a href="http://www.cmoney.tw/notes/note-detail.aspx?nid=6004" class="text-warning">什麼是股票?</a></h4>
+        <h4><a href="https://investarter.blogspot.com/2012/10/blog-post_8.html" class="text-warning">什麼是股市?</a></h4>
+        <h4><a href="http://www.cmoney.tw/notes/note-detail.aspx?nid=5883" class="text-warning">股價是如何決定的?</a></h4>
+        <h4><a href="http://www.cmoney.tw/notes/note-detail.aspx?nid=5770" class="text-warning">什麼是加權指數(大盤)?</a></h4>
+        <h4><a href="http://www.cmoney.tw/notes/note-detail.aspx?nid=3874" class="text-warning">什麼是除權息?</a></h4>
+        <h4><a href="http://www.cmoney.tw/notes/note-detail.aspx?nid=6164" class="text-warning">什麼是融資</a>、<a href="http://www.cmoney.tw/notes/note-detail.aspx?nid=6284" class="text-warning">融券?</a></h4>
+        <h4><a href="http://www.cmoney.tw/notes/note-detail.aspx?nid=6283" class="text-warning">ETF是什麼?</a></h4>
+        <h4><a href="https://tw.stock.yahoo.com/news/%E6%83%B3%E5%B9%AB%E8%87%AA%E5%B7%B1%E5%8A%A0%E8%96%AA-%E9%81%8E%E4%BE%86%E4%BA%BA%E6%8F%90%E9%86%92-%E6%8A%95%E8%B3%87%E5%89%8D%E5%85%88%E7%9C%8B%E9%80%996%E5%80%8B%E9%8C%AF%E8%AA%A4%E5%BF%83%E6%85%8B%E4%BD%A0%E6%9C%89%E5%97%8E-000000924.html" class="text-warning">進場前正確投資心態</a></h4>
+        <h4><a href="https://moneymate.space/%E8%82%A1%E5%B8%82%E8%A1%93%E8%AA%9E/" class="text-warning">常見股市術語</a></h4>
+    </div>
+</body>
+

@@ -23,5 +23,9 @@ namespace FirstTrade_.Controllers
             return View();
         }
 
+        public ActionResult Tips()
+        {
+            return View();
+        }
     }
 }
