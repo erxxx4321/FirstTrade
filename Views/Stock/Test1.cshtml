@@ -9,200 +9,222 @@
     var recordlength = ViewBag.recordlength;
 }
 
-<div class="d-flex flex-lg-row justify-content-lg-evenly flex-column justify-content-center align-items-center mt-5">
-    <div>
-        <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div class="container d-flex flex-lg-row justify-content-lg-evenly flex-column justify-content-center mt-5 mb-4">
+
+    @* 左區 *@
+    <div class="d-flex flex-column justify-content-center align-items-center align-items-lg-start">
         <div id="lineChart"></div>
 
-        <form method="post" action="Test1" class="m-5 d-flex flex-row flex-wrap align-items-center">
-            <div class="me-3">
-                <label>選擇股票:</label>
-                <input type="text" name="Stock123" />
+        <form method="post" action="Test1" class="mt-1 mb-lg-3 mb-5 d-flex flex-row flex-wrap align-items-center justify-content-center">
+            <div class="me-3 d-flex flex-row align-items-center">
+                <label class="me-2">選擇股票</label>
+                <input type="text" name="Stock123" class="form-control" style="width: 150px"/>
             </div>
-            <div class="me-3">
-                <label>選擇日期:</label>
-                <input type="date" name="Date123" /><!--叫Date0時還不給binding...-->
+            <div class="me- mt-2 mt-sm-0 d-flex flex-row align-items-center"">
+                <label class="me-2">選擇日期</label>
+                <input type="date" name="Date123" class="form-control" style="width: 150px;"/><!--叫Date0時還不給binding...-->
             </div>
-            <button type="submit" class="ft-btn">提交</button>
+            <button type="submit" class="ft-btn rounded-circle ms-2">
+                <i class="fas fa-sync"></i>
+            </button>
         </form>
     </div>
 
-    <div>
-        <form method="post" action="">
+    @* 右區 *@
+    <div class="mt-lg-5">
+        <form method="post" class="d-flex d-lg-inline-block justify-content-evenly flex-wrap playform">
             <div class="mb-3">
-                <label>編號:</label>
-                <input type="number" name="Cid" value=@ViewBag.Cid readonly />
+                <label class="me-1">編號</label>
+                <input type="number" name="Cid" value=@ViewBag.Cid class="p-1 border rounded" readonly />
             </div>
             <div class="mb-3">
-                <label>資金:</label>
-                <input type="number" name="Cash" value=@ViewBag.Cash readonly />
+                <label class="me-1">資金</label>
+                <input type="number" name="Cash" value=@ViewBag.Cash class="p-1 border rounded" readonly />
             </div>
             <div class="mb-3">
-                <label>部位:</label>
-                <input type="number" name="Position" value=@ViewBag.Position readonly />
+                <label class="me-1">部位</label>
+                <input type="number" name="Position" value=@ViewBag.Position class="p-1 border rounded" readonly />
             </div>
             <div class="mb-3">
-                <label>損益:</label>
-                <input type="number" name="Profit" value=@ViewBag.Profit readonly />
+                <label class="me-1">損益</label>
+                <input type="number" name="Profit" value=@ViewBag.Profit class="p-1 border rounded" readonly />
             </div>
             <div class="mb-3">
-                <label>狀態:</label>
-                <input type="number" name="Status" value=@ViewBag.Status />
+                <label class="me-1 wenk-length--small"  data-wenk="正數: 買入, 負數: 賣出，0: 不動" data-wenk-pos="top">數量</label>
+                <input type="number" name="Status" class="p-1 border rounded" value=@ViewBag.Status />
             </div>
             <div class="mb-3">
-                <label>買入價:</label>
-                <input type="number" name="BuyCost" value=@ViewBag.BuyCost readonly />
+                <label class="me-1">買入價</label>
+                <input type="number" name="BuyCost" class="p-1 border rounded" value=@ViewBag.BuyCost readonly />
             </div>
             <div class="mb-3">
-                <label>幾天後:</label>
-                <input type="text" name="Name">
+                <label class="me-1">幾天後</label>
+                <input type="text" name="Name" class="p-1 border rounded">
             </div>
             <div class="mb-3">
-                <label>目前天數:</label>
-                <input type="text" name="Total" value="@ViewBag.Total" readonly />
+                <label class="me-1">目前天數</label>
+                <input type="text" name="Total" value="@ViewBag.Total" class="p-1 border rounded" readonly />
             </div>
             <div class="mb-3">
                 <input type="text" name="StartDate" value="@ViewBag.StartDate" hidden />
             </div>
-            <button type="submit" class="ft-btn">提交</button>
+            <button type="submit" class="ft-btn submitBtn w-25 rounded">提交</button>
         </form>
     </div>
-    <div id="stockInfo" class="circle ft-btn">
+    <div id="stockInfo" class="circle ft-btn" data-wenk="介面功能教學" data-wenk-pos="left">
         <a>?</a>
     </div>
 </div>
 
-<div class="container" style="display:flex; flex-wrap:wrap; height:140px; border:solid; width:500px; padding:0px; justify-content:center; margin-left:0; margin-top:10px; margin-bottom:10px;text-align:center">
-    <div class="box-0" style="padding:5px; width:60px; ">
-        <label>股票</label>
-        @if (recordlength <= 3)
-        {
-            foreach (var item in recordstates)
-            {
-                <p>@item.stocknumber</p>
-            }
-        }
-        else if (recordlength > 3)
-        {
-            for (var i = 0; i <= 2; i++)
-            {
-                <p>@recordstates[i].stocknumber</p>
-            }
-        }
-    </div>
-    <div class="box-1" style="padding:5px; width:50px; ">
-        <label>多空</label>
-        @if (recordlength <= 3)
-        {
-            foreach (var item in recordstates)
-            {
-                <p>@item.direction</p>
-            }
-        }
-        else if (recordlength > 3)
-        {
-            for (var i = 0; i <= 2; i++)
-            {
-                <p>@recordstates[i].direction</p>
-            }
-        }
-    </div>
-    <div class="box-2" style="padding:5px; width:80px">
-        <label>買價</label>
-        @if (recordlength <= 3)
-        {
-            foreach (var item in recordstates)
-            {
-                <p>@item.buycost</p>
-            }
-        }
-        else if (recordlength > 3)
-        {
-            for (var i = 0; i <= 2; i++)
-            {
-                <p>@recordstates[i].buycost</p>
-            }
-        }
-    </div>
-    <div class="box-3" style="padding:5px; width:80px">
-        <label>賣價</label>
-        @if (recordlength <= 3)
-        {
-            foreach (var item in recordstates)
-            {
-                <p>@item.sellprice</p>
-            }
-        }
-        else if (recordlength > 3)
-        {
-            for (var i = 0; i <= 2; i++)
-            {
-                <p>@recordstates[i].sellprice</p>
-            }
-        }
-    </div>
-    <div class="box-4" style="padding:5px; width:50px">
-        <label>部位</label>
-        @if (recordlength <= 3)
-        {
-            foreach (var item in recordstates)
-            {
-                <p>@item.position</p>
-            }
-        }
-        else if (recordlength > 3)
-        {
-            for (var i = 0; i <= 2; i++)
-            {
-                <p>@recordstates[i].position</p>
-            }
-        }
-    </div>
-    <div class="box-5" style="padding:5px; width:50px">
-        <label>損益</label>
-        @if (recordlength <= 3)
-        {
-            foreach (var item in recordstates)
-            {
-                <p>@item.profit</p>
-            }
-        }
-        else if (recordlength > 3)
-        {
-            for (var i = 0; i <= 2; i++)
-            {
-                <p>@recordstates[i].profit</p>
-            }
-        }
-    </div>
-    <div class="box-6" style="padding:5px; width:120px; ">
-        <label>日期</label>
-        @if (recordlength <= 3)
-        {
-            foreach (var item in recordstates)
-            {
-                <p>@item.date</p>
-            }
-        }
-        else if (recordlength > 3)
-        {
-            for (var i = 0; i <= 2; i++)
-            {
-                <p>@recordstates[i].date</p>
-            }
-        }
-    </div>
+<div class="container pltable">
+    <table class="table border">
+        <thead class="ft-dark-text" style="background: var(--lightyellow)">
+            <tr>
+                <th scope="col">股票</th>
+                <th scope="col">多空</th>
+                <th scope="col">買價</th>
+                <th scope="col">賣價</th>
+                <th scope="col">部位</th>
+                <th scope="col">損益</th>
+                <th scope="col">日期</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @* 股價 *@
+                <td>
+                    @if (recordlength <= 3)
+                    {
+                        foreach (var item in recordstates)
+                        {
+                            <p>@item.stocknumber</p>
+                        }
+                    }
+                    else if (recordlength > 3)
+                    {
+                        for (var i = 0; i <= 2; i++)
+                        {
+                            <p>@recordstates[i].stocknumber</p>
+                        }
+                    }
+                </td>
+                @* 多空 *@
+                <td>
+                    @if (recordlength <= 3)
+                    {
+                        foreach (var item in recordstates)
+                        {
+                            <p>@item.direction</p>
+                        }
+                    }
+                    else if (recordlength > 3)
+                    {
+                        for (var i = 0; i <= 2; i++)
+                        {
+                            <p>@recordstates[i].direction</p>
+                        }
+                    }
+                </td>
+                @* 買價 *@
+                <td>
+                    @if (recordlength <= 3)
+                    {
+                        foreach (var item in recordstates)
+                        {
+                            <p>@item.buycost</p>
+                        }
+                    }
+                    else if (recordlength > 3)
+                    {
+                        for (var i = 0; i <= 2; i++)
+                        {
+                            <p>@recordstates[i].buycost</p>
+                        }
+                    }
+                </td>
+                @* 賣價 *@
+                <td>
+                    @if (recordlength <= 3)
+                    {
+                        foreach (var item in recordstates)
+                        {
+                            <p>@item.sellprice</p>
+                        }
+                    }
+                    else if (recordlength > 3)
+                    {
+                        for (var i = 0; i <= 2; i++)
+                        {
+                            <p>@recordstates[i].sellprice</p>
+                        }
+                    }
+                </td>
+                @* 部位 *@
+                <td>
+                    @if (recordlength <= 3)
+                    {
+                        foreach (var item in recordstates)
+                        {
+                            <p>@item.position</p>
+                        }
+                    }
+                    else if (recordlength > 3)
+                    {
+                        for (var i = 0; i <= 2; i++)
+                        {
+                            <p>@recordstates[i].position</p>
+                        }
+                    }
+                </td>
+                @* 損益 *@
+                <td>
+                    @if (recordlength <= 3)
+                    {
+                        foreach (var item in recordstates)
+                        {
+                            <p>@item.profit</p>
+                        }
+                    }
+                    else if (recordlength > 3)
+                    {
+                        for (var i = 0; i <= 2; i++)
+                        {
+                            <p>@recordstates[i].profit</p>
+                        }
+                    }
+                </td>
+                @* 日期 *@
+                <td>
+                    @if (recordlength <= 3)
+                    {
+                        foreach (var item in recordstates)
+                        {
+                            <p>@item.date</p>
+                        }
+                    }
+                    else if (recordlength > 3)
+                    {
+                        for (var i = 0; i <= 2; i++)
+                        {
+                            <p>@recordstates[i].date</p>
+                        }
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
+
 <div class="layer">
-    <h2 class="ft-light-text m-3">介面功能介紹</h2>
+    <h2 class="ft-light-text m-3">介面功能教學</h2>
     <div class="layerContent p-2">
-        <div class="lineArea me-5">
-            <h3 class="mb-4">線圖區</h3>
+        <div class="lineArea me-sm-5">
+            <h3 class="mb-4" style="border-bottom: 2px solid var(--yellow)">線圖區</h3>
             <div class="lineItems"></div>
         </div>
         <div class="inputArea">
-            <h3 class="mb-4">輸入框區</h3>
+            <h3 class="mb-4" style="border-bottom: 2px solid var(--yellow)">輸入框區</h3>
             <div class="inputItems"></div>
         </div>
     </div>
@@ -263,16 +285,62 @@
         height: 450px;
     }
 
-    @@media screen and (max-width: 922px) {
-        #LineChart {
-            width: 60vw;
+    @@media screen and (max-width: 768px) {
+        #lineChart {
+            width: 100%;
+        }
+
+        .circle {
+            bottom: 20%;
+        }
+
+        .playform {
+            width: 80%;
+            margin: 0 auto;
         }
     }
 
-    @@media screen and (max-width: 768px) {
-        #LineChart {
-            width: 80vw;
+    @@media screen and (max-width: 576px) {
+        #lineChart {
+            width: 100%;
         }
+
+        .circle {
+            top: 14px;
+            right: 15%;
+            width: 30px;
+            height: 30px;
+            box-shadow: 2px 2px 15px rgba(0,0,0,0.4);
+            border: none;
+        }
+
+        .layer {
+            height: auto;
+        }
+
+        .layerContent {
+            flex-direction: column;
+            width: 100%;
+            align-items: center;
+        }
+
+        .lineArea {
+            width: 80%;
+        }
+
+        .inputArea {
+            width: 80%;
+        }
+    }
+
+    @@media screen and (min-width: 922px) {
+        .pltable {
+            width: 70%;
+        }
+    } 
+    
+    input:focus {
+        outline-color: var(--lightyellow);
     }
 </style>
 
@@ -438,7 +506,7 @@
             type: 'group',
             left: 'center',
             top: 70,
-            width: 300,
+            width: 400,
             bounding: 'raw',
             children: [{
                 id: 'MA5',
@@ -589,7 +657,7 @@
             text: "\n你賺/賠多少錢"
         },
         {
-            title: "狀態 :",
+            title: "數量 :",
             text: "\n選擇買/賣的數量<br>(正數:\n買入，負數:\n賣出，0:\n不動)"
         },
         {
