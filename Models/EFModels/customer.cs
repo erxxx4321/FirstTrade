@@ -20,5 +20,14 @@ namespace FirstTrade_.Models.EFModels
         public int? BuyCost { get; set; }
 
         public int? Status { get; set; }
+
+        [StringLength(50)]
+        public string Account { get; set; }
+
+        [StringLength(50)]
+        public string Password { get; set; }
+
+        [StringLength(50)]
+        public string Roles { get; set; }
     }
 }

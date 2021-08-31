@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [股價]    Script Date: 2021/8/30 下午 01:52:23 ******/
+/****** Object:  Database [股價]    Script Date: 2021/8/31 下午 05:57:52 ******/
 CREATE DATABASE [股價]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -82,12 +82,12 @@ ALTER DATABASE [股價] SET QUERY_STORE = OFF
 GO
 USE [股價]
 GO
-/****** Object:  User [testlogin]    Script Date: 2021/8/30 下午 01:52:23 ******/
+/****** Object:  User [testlogin]    Script Date: 2021/8/31 下午 05:57:52 ******/
 CREATE USER [testlogin] FOR LOGIN [testlogin] WITH DEFAULT_SCHEMA=[dbo]
 GO
 ALTER ROLE [db_owner] ADD MEMBER [testlogin]
 GO
-/****** Object:  Table [dbo].[customer]    Script Date: 2021/8/30 下午 01:52:23 ******/
+/****** Object:  Table [dbo].[customer]    Script Date: 2021/8/31 下午 05:57:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -99,13 +99,16 @@ CREATE TABLE [dbo].[customer](
 	[Profit] [int] NULL,
 	[BuyCost] [int] NULL,
 	[Status] [int] NULL,
+	[Account] [nvarchar](50) NULL,
+	[Password] [nvarchar](50) NULL,
+	[Roles] [nvarchar](50) NULL,
  CONSTRAINT [PK_customer] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[recordprofit]    Script Date: 2021/8/30 下午 01:52:23 ******/
+/****** Object:  Table [dbo].[recordprofit]    Script Date: 2021/8/31 下午 05:57:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -126,7 +129,7 @@ CREATE TABLE [dbo].[recordprofit](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[stockprice]    Script Date: 2021/8/30 下午 01:52:23 ******/
+/****** Object:  Table [dbo].[stockprice]    Script Date: 2021/8/31 下午 05:57:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -148,583 +151,619 @@ CREATE TABLE [dbo].[stockprice](
 GO
 SET IDENTITY_INSERT [dbo].[customer] ON 
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (1, 10000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (1, 10000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (2, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (2, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (3, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (3, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (4, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (4, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (5, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (5, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (6, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (6, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (7, 66666, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (7, 66666, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (8, 66666, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (8, 66666, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (9, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (9, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (10, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (10, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (11, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (11, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (12, 66666, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (12, 66666, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (13, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (13, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (14, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (14, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (15, 100010, 20, 30, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (15, 100010, 20, 30, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (16, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (16, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (17, 100010, 20, 30, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (17, 100010, 20, 30, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (18, 100050, 100, 150, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (18, 100050, 100, 150, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (19, 100070, 140, 210, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (19, 100070, 140, 210, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (20, 94000, 2, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (20, 94000, 2, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (21, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (21, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (22, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (22, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (23, 94000, 4, 0, 30, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (23, 94000, 4, 0, 30, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (24, 95000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (24, 95000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (25, 98000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (25, 98000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (26, 99000, 1, 7, 32, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (26, 99000, 1, 7, 32, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (27, 95000, 0, -2, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (27, 95000, 0, -2, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (28, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (28, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (29, 98000, 2, -3, 31, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (29, 98000, 2, -3, 31, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (30, 98000, 1, 0, 31, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (30, 98000, 1, 0, 31, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (31, 98000, 1, NULL, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (31, 98000, 1, NULL, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (32, 99000, 1, -3, 31, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (32, 99000, 1, -3, 31, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (33, 97000, 3, -1, 30, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (33, 97000, 3, -1, 30, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (34, 99000, 1, 0, 320252, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (34, 99000, 1, 0, 320252, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (35, 67975, 0, 171220, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (35, 67975, 0, 171220, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (36, 67975, -1, 0, 32025, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (36, 67975, -1, 0, 32025, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (37, 88751, 0, 11249, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (37, 88751, 0, 11249, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (38, 68090, -1, NULL, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (38, 68090, -1, NULL, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (39, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (39, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (40, 109986, 0, 9986, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (40, 109986, 0, 9986, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (41, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (41, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (42, 97934, 0, -2066, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (42, 97934, 0, -2066, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (43, 96901, 0, NULL, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (43, 96901, 0, NULL, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (44, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (44, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (45, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (45, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (46, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (46, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (47, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (47, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (48, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (48, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (49, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (49, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (50, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (50, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (51, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (51, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (52, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (52, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (53, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (53, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (54, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (54, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (55, 47314, 2, 2411, 22842, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (55, 47314, 2, 2411, 22842, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (56, 99426, 0, NULL, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (56, 99426, 0, NULL, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (57, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (57, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (58, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (58, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (59, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (59, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (60, 101607, 0, NULL, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (60, 101607, 0, NULL, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (61, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (61, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (62, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (62, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (63, 100230, 0, NULL, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (63, 100230, 0, NULL, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (64, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (64, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (65, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (65, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (66, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (66, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (67, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (67, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (68, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (68, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (69, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (69, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (70, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (70, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (71, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (71, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (72, 99426, 0, NULL, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (72, 99426, 0, NULL, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (73, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (73, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (74, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (74, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (75, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (75, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (76, 100704, 0, NULL, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (76, 100704, 0, NULL, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (77, 98393, 0, NULL, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (77, 98393, 0, NULL, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (78, 98163, 0, -1837, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (78, 98163, 0, -1837, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (79, 99082, 0, NULL, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (79, 99082, 0, NULL, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (80, 100114, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (80, 100114, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (81, 98163, 0, -1607, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (81, 98163, 0, -1607, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (82, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (82, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (83, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (83, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (84, 97819, 0, -2181, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (84, 97819, 0, -2181, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (85, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (85, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (86, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (86, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (87, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (87, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (88, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (88, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (89, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (89, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (90, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (90, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (91, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (91, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (92, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (92, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (93, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (93, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (94, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (94, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (95, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (95, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (96, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (96, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (97, 97705, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (97, 97705, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (98, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (98, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (99, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (99, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (100, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (100, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (101, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (101, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (102, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (102, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (103, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (103, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (104, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (104, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (105, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (105, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (106, 98049, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (106, 98049, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (107, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (107, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (108, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (108, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (109, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (109, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (110, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (110, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (111, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (111, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (112, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (112, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (113, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (113, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (114, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (114, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (115, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (115, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (116, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (116, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (117, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (117, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (118, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (118, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (119, 98967, 0, -1033, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (119, 98967, 0, -1033, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (120, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (120, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (121, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (121, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (122, 92884, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (122, 92884, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (123, 102585, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (123, 102585, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (124, 99311, 0, -689, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (124, 99311, 0, -689, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (125, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (125, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (126, 96786, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (126, 96786, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (127, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (127, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (128, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (128, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (129, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (129, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (130, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (130, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (131, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (131, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (132, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (132, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (133, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (133, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (134, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (134, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (135, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (135, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (136, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (136, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (137, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (137, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (138, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (138, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (139, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (139, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (140, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (140, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (141, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (141, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (142, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (142, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (143, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (143, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (144, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (144, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (145, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (145, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (146, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (146, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (147, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (147, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (148, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (148, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (149, 67516, 1, 9566, 20967, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (149, 67516, 1, 9566, 20967, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (150, 97475, 0, -2066, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (150, 97475, 0, -2066, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (151, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (151, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (152, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (152, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (153, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (153, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (154, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (154, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (155, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (155, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (156, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (156, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (157, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (157, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (158, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (158, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (159, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (159, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (160, 98163, 0, -1837, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (160, 98163, 0, -1837, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (161, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (161, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (162, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (162, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (163, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (163, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (164, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (164, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (165, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (165, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (166, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (166, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (167, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (167, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (168, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (168, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (169, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (169, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (170, 99885, 0, -115, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (170, 99885, 0, -115, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (171, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (171, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (172, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (172, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (173, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (173, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (174, 99196, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (174, 99196, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (175, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (175, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (176, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (176, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (177, 98049, 0, -1951, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (177, 98049, 0, -1951, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (178, 38246, 2, 0, 30992, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (178, 38246, 2, 0, 30992, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (179, 10581, -3, 0, 9527, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (179, 10581, -3, 0, 9527, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (180, 38017, -2, 459, -31221, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (180, 38017, -2, 459, -31221, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (181, 36524, -2, -574, -31738, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (181, 36524, -2, -574, -31738, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (182, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (182, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (183, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (183, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (184, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (184, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (185, 103100, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (185, 103100, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (186, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (186, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (187, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (187, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (188, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (188, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (189, 99899, 1, 0, 101, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (189, 99899, 1, 0, 101, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (190, -8000, 1, 0, 108000, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (190, -8000, 1, 0, 108000, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (191, 1014500, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (191, 1014500, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (192, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (192, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (193, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (193, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (194, 100000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (194, 100000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (195, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (195, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (196, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (196, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (197, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (197, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (198, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (198, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (199, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (199, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (200, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (200, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (201, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (201, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (202, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (202, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (203, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (203, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (204, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (204, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (205, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (205, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (206, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (206, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (207, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (207, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (208, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (208, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (209, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (209, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (210, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (210, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (211, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (211, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (212, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (212, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (213, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (213, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (214, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (214, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (215, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (215, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (216, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (216, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (217, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (217, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (218, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (218, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (219, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (219, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (220, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (220, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (221, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (221, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (222, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (222, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (223, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (223, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (224, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (224, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (225, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (225, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (226, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (226, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (227, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (227, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (228, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (228, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (229, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (229, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (230, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (230, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (231, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (231, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (232, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (232, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (233, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (233, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (234, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (234, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (235, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (235, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (236, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (236, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (237, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (237, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (238, 993500, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (238, 993500, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (239, 993500, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (239, 993500, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (240, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (240, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (241, 1003000, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (241, 1003000, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (242, 887000, -1, 0, 113000, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (242, 887000, -1, 0, 113000, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (243, 1016500, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (243, 1016500, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (244, 904500, 1, 5500, 95500, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (244, 904500, 1, 5500, 95500, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (245, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (245, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (246, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (246, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (247, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (247, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (248, 1015000, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (248, 1015000, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (249, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (249, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (250, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (250, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (251, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (251, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (252, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (252, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (253, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (253, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (254, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (254, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (255, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (255, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (256, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (256, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (257, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (257, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (258, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (258, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (259, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (259, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (260, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (260, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (261, 892000, 1, 0, 108000, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (261, 892000, 1, 0, 108000, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (262, 1000000, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (262, 1000000, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (263, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (263, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (264, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (264, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (265, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (265, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (266, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (266, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (267, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (267, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (268, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (268, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (269, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (269, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (270, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (270, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (271, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (271, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (272, 995000, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (272, 995000, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (273, 993500, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (273, 993500, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (274, 987000, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (274, 987000, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (275, 993500, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (275, 993500, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (276, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (276, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (277, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (277, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (278, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (278, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (279, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (279, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (280, 987000, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (280, 987000, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (281, 1003500, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (281, 1003500, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (282, 997000, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (282, 997000, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (283, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (283, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (284, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (284, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (285, 1000000, 0, 0, NULL, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (285, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (286, 892500, 1, 0, 114000, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (286, 892500, 1, 0, 114000, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (287, 1005500, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (287, 1005500, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (288, 999000, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (288, 999000, 0, 0, 0, 0, NULL, NULL, NULL)
 GO
-INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]) VALUES (289, 983000, 0, 0, 0, 0)
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (289, 983000, 0, 0, 0, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (290, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (291, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (292, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (293, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (294, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (295, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (296, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (297, 1005500, 0, 0, 0, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (298, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (299, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (300, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (301, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (302, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (303, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (304, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (305, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (306, 1000000, 0, 0, NULL, 0, NULL, NULL, NULL)
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (307, 1005000, 0, 0, 0, 0, N'testt2', N'testt2', N'teacher')
 GO
 SET IDENTITY_INSERT [dbo].[customer] OFF
 GO
@@ -815,6 +854,14 @@ GO
 INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (42, 289, N'2330', N'空', 109500, 105500, 1, 4000, N'2000-11-06')
 GO
 INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (43, 289, N'2330', N'空', 114000, 119000, 1, -5000, N'2000-11-08')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (44, 297, N'2330', N'多', 95500, 101000, 1, 5500, N'2000-11-01')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (45, 307, N'2330', N'多', 103000, 111000, 1, 8000, N'2000-10-07')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (46, 307, N'2330', N'多', 99500, 98000, 1, -1500, N'2000-10-05')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (47, 307, N'2330', N'多', 99500, 98000, 1, -1500, N'2000-10-05')
 GO
 SET IDENTITY_INSERT [dbo].[recordprofit] OFF
 GO

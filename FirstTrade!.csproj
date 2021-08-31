@@ -137,9 +137,13 @@
     <Compile Include="Models\EFModels\Model1.cs" />
     <Compile Include="Models\EFModels\recordprofit.cs" />
     <Compile Include="Models\EFModels\stockprice.cs" />
+    <Compile Include="Models\EFModels\sysdiagram.cs" />
     <Compile Include="Models\Services\DDisplay.cs" />
     <Compile Include="Models\Services\RegistersCriteria.cs" />
+    <Compile Include="Models\Services\Users.cs" />
     <Compile Include="Models\ViewModels\CashRelateVM.cs" />
+    <Compile Include="Models\ViewModels\CreateVM.cs" />
+    <Compile Include="Models\ViewModels\LoginVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

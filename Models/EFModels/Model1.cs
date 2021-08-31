@@ -15,6 +15,7 @@
         public virtual DbSet<customer> customers { get; set; }
         public virtual DbSet<recordprofit> recordprofits { get; set; }
         public virtual DbSet<stockprice> stockprices { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
