@@ -64,7 +64,7 @@ namespace FirstTrade_.Controllers
 
             ViewBag.Total = ct;
             ViewBag.StartDate = inject.StartDate;
-            dDisplay.stockname = curdb[0].證券代碼;
+            dDisplay.stockname = curdb[0].證券代碼 +" "+ curdb[0].證券名稱;
 
             #endregion
 

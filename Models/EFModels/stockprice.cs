@@ -11,8 +11,11 @@ namespace FirstTrade_.Models.EFModels
     {
         public int id { get; set; }
 
-        [StringLength(4)]
+        [StringLength(255)]
         public string 證券代碼 { get; set; }
+
+        [StringLength(255)]
+        public string 證券名稱 { get; set; }
 
         [StringLength(50)]
         public string 年月日 { get; set; }
