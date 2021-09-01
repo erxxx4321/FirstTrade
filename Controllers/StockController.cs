@@ -25,6 +25,7 @@ namespace FirstTrade_.Controllers
             return View(db.stockprices.ToList());
         }
 
+
         public ActionResult Test1(RegistersCriteria inject, CashRelateVM injectmoney, DateTime? Date123, String Stock123)
         {
             #region 日期
@@ -83,6 +84,7 @@ namespace FirstTrade_.Controllers
                 string account = ticket.Name;
                 int? tempid = db.customers.Where(x => string.Compare(x.Account, account, true) == 0).FirstOrDefault().id;
                 customer = db.customers.Find(tempid);
+                CashRelateVM.Cid = Convert.ToInt32(tempid);
             }
 
             //先結清原有部位損益

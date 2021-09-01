@@ -134,6 +134,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\EFModels\customer.cs" />
+    <Compile Include="Models\EFModels\group.cs" />
     <Compile Include="Models\EFModels\Model1.cs" />
     <Compile Include="Models\EFModels\recordprofit.cs" />
     <Compile Include="Models\EFModels\stockprice.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Models\ViewModels\CashRelateVM.cs" />
     <Compile Include="Models\ViewModels\CreateVM.cs" />
     <Compile Include="Models\ViewModels\LoginVM.cs" />
+    <Compile Include="Models\ViewModels\TeacherAreaVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +228,9 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\SignUp.cshtml" />
     <Content Include="Views\Home\Tips.cshtml" />
+    <Content Include="Views\Home\UserArea.cshtml" />
+    <Content Include="Views\Home\TeacherArea.cshtml" />
+    <Content Include="Views\Home\MemberDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
