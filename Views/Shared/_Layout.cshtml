@@ -19,12 +19,15 @@
             @Html.ActionLink("FirstTrade!", "Index", "Home", new { @class = "h2 ft-light-text" })
             <ul class="links">
                 <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3 link">
-                    @Html.ActionLink("StockGame", "Test1", "Stock",null, new { @class = "h5 ft-light-text" })
+                    @Html.ActionLink("小知識", "Tips", "Home", null, new { @class = "h5 ft-light-text" })
+                </li>
+                <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3 link">
+                    @Html.ActionLink("StockGame", "Test1", "Stock", null, new { @class = "h5 ft-light-text" })
                 </li>
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3 link">
-                        @Html.ActionLink("Hi! "+(User.Identity.Name), "Index", "Home", new { @class = "h5 ft-light-text" })
+                        @Html.ActionLink("Hi! " + (User.Identity.Name), "Index", "Home", new { @class = "h5 ft-light-text" })
                     </li>
                     <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3 link">
                         @Html.ActionLink("登出", "Logout", "Home", null, new { @class = "h5 ft-light-text" })
