@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [股價]    Script Date: 2021/9/1 下午 12:02:35 ******/
+/****** Object:  Database [股價]    Script Date: 2021/9/2 上午 04:32:59 ******/
 CREATE DATABASE [股價]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -82,12 +82,12 @@ ALTER DATABASE [股價] SET QUERY_STORE = OFF
 GO
 USE [股價]
 GO
-/****** Object:  User [testlogin]    Script Date: 2021/9/1 下午 12:02:35 ******/
+/****** Object:  User [testlogin]    Script Date: 2021/9/2 上午 04:32:59 ******/
 CREATE USER [testlogin] FOR LOGIN [testlogin] WITH DEFAULT_SCHEMA=[dbo]
 GO
 ALTER ROLE [db_owner] ADD MEMBER [testlogin]
 GO
-/****** Object:  Table [dbo].[customer]    Script Date: 2021/9/1 下午 12:02:35 ******/
+/****** Object:  Table [dbo].[customer]    Script Date: 2021/9/2 上午 04:32:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -108,7 +108,22 @@ CREATE TABLE [dbo].[customer](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[recordprofit]    Script Date: 2021/9/1 下午 12:02:35 ******/
+/****** Object:  Table [dbo].[group]    Script Date: 2021/9/2 上午 04:32:59 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[group](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[Leader] [int] NULL,
+	[Member] [int] NULL,
+ CONSTRAINT [PK_group] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[recordprofit]    Script Date: 2021/9/2 上午 04:32:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -129,7 +144,7 @@ CREATE TABLE [dbo].[recordprofit](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[stockprice]    Script Date: 2021/9/1 下午 12:02:35 ******/
+/****** Object:  Table [dbo].[stockprice]    Script Date: 2021/9/2 上午 04:32:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -768,7 +783,67 @@ INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status]
 GO
 INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (308, 990500, 0, 0, 0, 0, N'testt3', N'testt3', N'teacher')
 GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (309, 1002500, 0, 0, 0, 0, N'test4', N'test4', N'teacher')
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (310, 1000000, 0, 0, NULL, 0, N'test5', N'test5', N'student')
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (311, 990500, 0, 0, 0, 0, N'student1', N'student1', N'student')
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (312, 1001500, 0, 0, 0, 0, N'teacher1', N'teacher1', N'teacher')
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (313, 1000000, 0, 0, 0, 0, N'student2', N'student2', N'student')
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (314, 1000000, 0, 0, 0, 0, N'student3', N'student3', N'student')
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (315, 1000000, 0, 0, 0, 0, N'student4', N'student4', N'student')
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (316, 1000000, 0, 0, 0, 0, N'student5', N'student5', N'student')
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (317, 1002496, 0, 0, 0, 0, N'student6', N'student6', N'student')
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (318, 1000000, 0, 0, NULL, 0, N'student7', N'student7', N'student')
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (319, 1000000, 0, 0, NULL, 0, N'teacher2', N'teacher2', N'teacher')
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (320, 1022496, 0, 0, 0, 0, N'student8', N'student8', N'student')
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (321, 1000000, 0, 0, NULL, 0, N'teacher3', N'teacher3', N'teacher')
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (322, 1000000, 0, 0, NULL, 0, N'student9', N'student9', N'student')
+GO
+INSERT [dbo].[customer] ([id], [Cash], [Position], [Profit], [BuyCost], [Status], [Account], [Password], [Roles]) VALUES (323, 1000000, 0, 0, NULL, 0, N'student10', N'student10', N'student')
+GO
 SET IDENTITY_INSERT [dbo].[customer] OFF
+GO
+SET IDENTITY_INSERT [dbo].[group] ON 
+GO
+INSERT [dbo].[group] ([id], [Leader], [Member]) VALUES (1, 312, 312)
+GO
+INSERT [dbo].[group] ([id], [Leader], [Member]) VALUES (2, 312, 311)
+GO
+INSERT [dbo].[group] ([id], [Leader], [Member]) VALUES (3, 312, 313)
+GO
+INSERT [dbo].[group] ([id], [Leader], [Member]) VALUES (4, 312, 314)
+GO
+INSERT [dbo].[group] ([id], [Leader], [Member]) VALUES (5, 312, 315)
+GO
+INSERT [dbo].[group] ([id], [Leader], [Member]) VALUES (6, 312, 316)
+GO
+INSERT [dbo].[group] ([id], [Leader], [Member]) VALUES (7, 312, 317)
+GO
+INSERT [dbo].[group] ([id], [Leader], [Member]) VALUES (8, 312, 318)
+GO
+INSERT [dbo].[group] ([id], [Leader], [Member]) VALUES (9, 319, 319)
+GO
+INSERT [dbo].[group] ([id], [Leader], [Member]) VALUES (10, 319, 320)
+GO
+INSERT [dbo].[group] ([id], [Leader], [Member]) VALUES (11, 321, 321)
+GO
+INSERT [dbo].[group] ([id], [Leader], [Member]) VALUES (12, NULL, 322)
+GO
+INSERT [dbo].[group] ([id], [Leader], [Member]) VALUES (13, 312, 323)
+GO
+SET IDENTITY_INSERT [dbo].[group] OFF
 GO
 SET IDENTITY_INSERT [dbo].[recordprofit] ON 
 GO
@@ -893,6 +968,50 @@ GO
 INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (60, 0, N'2330 台積電', N'多', 103000, 97500, 1, -5500, N'2000-10-12')
 GO
 INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (61, 0, N'2330 台積電', N'多', 0, 97500, 1, 0, N'2000-10-12')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (62, 307, N'2330 台積電', N'多', 99500, 98000, 1, -1500, N'2000-10-05')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (63, 309, N'2330 台積電', N'多', 99500, 98000, 1, -1500, N'2000-10-05')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (64, 309, N'2330 台積電', N'空', 103000, 111000, 1, -8000, N'2000-10-07')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (65, 309, N'2330 台積電', N'空', 109000, 104000, 1, 5000, N'2000-10-11')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (66, 309, N'2330 台積電', N'空', 97500, 90500, 1, 7000, N'2000-10-13')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (67, 311, N'1101 台泥', N'多', 18100, 16600, 1, -1500, N'2000-10-11')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (68, 311, N'2330 台積電', N'多', 98000, 90000, 1, -8000, N'2001-02-27')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (69, 307, N'2330台積電', N'多', 99500, 98000, 1, -1500, N'2000-10-05')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (70, 307, N'2330台積電', N'多', 103000, 111000, 1, 8000, N'2000-10-07')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (71, 307, N'2330台積電', N'多', 109000, 104000, 1, -5000, N'2000-10-11')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (72, 312, N'2330台積電', N'空', 99500, 98000, 2, 3000, N'2000-10-05')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (73, 312, N'2330台積電', N'多', 99500, 98000, 1, -1500, N'2000-10-05')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (74, 317, N'2330台積電', N'多', 100875, 111000, 1, 10125, N'2000-10-07')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (75, 317, N'2330台積電', N'多', 100875, 109000, 3, 24375, N'2000-10-09')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (76, 317, N'2330台積電', N'多', 104000, 97500, 1, -6500, N'2000-10-12')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (77, 317, N'2330台積電', N'空', 90500, 102500, 1, -12000, N'2000-10-16')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (78, 317, N'2330台積電', N'空', 88666, 87000, 1, 1666, N'2000-10-20')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (79, 317, N'2330台積電', N'空', 88666, 93000, 1, -4334, N'2000-10-21')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (80, 317, N'2330台積電', N'空', 88666, 99500, 1, -10834, N'2000-10-23')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (81, 320, N'2330台積電', N'多', 99500, 98000, 1, -1500, N'2000-10-05')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (82, 320, N'2330台積電', N'空', 107666, 104000, 1, 3666, N'2000-10-11')
+GO
+INSERT [dbo].[recordprofit] ([id], [userid], [stocknumber], [direction], [buycost], [sellprice], [position], [profit], [date]) VALUES (83, 320, N'2330台積電', N'空', 107666, 97500, 2, 20332, N'2000-10-12')
 GO
 SET IDENTITY_INSERT [dbo].[recordprofit] OFF
 GO
