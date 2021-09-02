@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="ft-navbar">
-        <div class="container header">
+        <div class="container-lg header">
             @Html.ActionLink("FirstTrade!", "Index", "Home", null, new { @class = "h2 ft-light-text" })
             <ul class="links">
                 <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3 link">
@@ -30,7 +30,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3 link">
-                        @Html.ActionLink("Hi! " + (User.Identity.Name), "UserArea", "Home", null, new { @class = "h5 ft-light-text" })
+                        @Html.ActionLink(" " + (User.Identity.Name), "UserArea", "Home", null, new { @class = "h5 ft-light-text far fa-user" })
                     </li>
                     <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3 link">
                         @Html.ActionLink("登出", "Logout", "Home", null, new { @class = "h5 ft-light-text" })
@@ -86,7 +86,11 @@
         list-style: none;
     }
 
-    ul  {
+    .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+        margin-bottom: 0;
+    }
+
+    ul {
         margin: 0;
     }
 
@@ -155,6 +159,7 @@
         right: 10px;
         padding-top: 20px;
         z-index: 1;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.4); 
     }
 
     #burger {
@@ -186,7 +191,6 @@
         }
 
         .links {
-            width: 200px;
             display: flex;
             flex-direction: row;
             justify-content: space-evenly;

@@ -36,7 +36,7 @@
                                 <input type="number" name="Leader" id="leader" class="form__input" placeholder="請輸入老師編號(可以不用輸入)">
                             </div>
                             <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
+                                <div class="col-md-offset-2">
                                     <input type="submit" value="提交" class="btn btn-default" />
                                 </div>
                             </div>
@@ -115,18 +115,18 @@
             border: 0px solid transparent;
             border-radius: 0;
             border-bottom: 1px solid #aaa;
-            padding: 1em .5em .5em;
+            padding: 0.5em .5em .5em;
             padding-left: 2em;
             outline: none;
             margin: 0.8em auto;
             transition: all .5s ease;
         }
 
-            .form__input:focus {
-                border-bottom-color: var(--yellow);
-                box-shadow: 0 0 5px rgba(255, 227, 89,.4);
-                border-radius: 4px;
-            }
+        .form__input:focus {
+            border-bottom-color: var(--yellow);
+            box-shadow: 0 0 5px rgba(255, 227, 89,.4);
+            border-radius: 4px;
+        }
 
         .btn {
             transition: all .5s ease;
