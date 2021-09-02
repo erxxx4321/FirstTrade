@@ -20,9 +20,9 @@
                             <div>
                                 <span class="h5 me-1">您的身分是 </span>
                                 <span>
-                                    <input type="radio" name="Roles" id="teacher" value="teacher" />
+                                    <input type="radio" name="Roles" id="teacher" value="teacher" onclick="enableInput()" />
                                     <label for="teacher">老師</label>
-                                    <input type="radio" name="Roles" id="student" value="student" />
+                                    <input type="radio" name="Roles" id="student" value="student" onclick="enableInput()"/>
                                     <label for="student">學生</label>
                                 </span>
                             </div>
@@ -33,7 +33,7 @@
                                 <input type="password" name="Password" id="password" class="form__input" placeholder="請輸入密碼">
                             </div>
                             <div class="row">
-                                <input type="number" name="Leader" id="leader" class="form__input" placeholder="請輸入老師編號(可以不用輸入)">
+                                <input type="number" name="Leader" id="leader" class="form__input" placeholder="請輸入老師編號" disabled>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-offset-2">
@@ -145,4 +145,12 @@
                 color: #fff;
             }
     </style>
-
+    <script>
+        function enableInput() {
+            if (document.getElementById("student").checked) {
+                document.getElementById("leader").disabled = false
+            } else {
+                document.getElementById("leader").disabled = true
+            }
+        }
+    </script>
