@@ -1,0 +1,148 @@
+﻿<script src="~/Scripts/Chart.min.js"></script>
+@model FirstTrade_.Models.Services.StockVM
+@{
+    ViewBag.Title = "MemberDetailTotalArea";
+}
+
+<div style="font-size:20px">
+    @Html.ActionLink("返回明細", "MemberDetails")
+</div>
+
+<h2>@ViewBag.account 的損益統計</h2>
+
+@{
+    ViewBag.Title = "Test1";
+    var jsonTime = Json.Encode(ViewBag.Time);//好像都要轉成Json才能在Chart裡面用
+    var jsonErrDev = Json.Encode(Model);
+}
+
+<style>
+
+    body {
+        background-color: #f1f1f1;
+    }
+
+    .container {
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .site-main {
+        background-color: #fff;
+    }
+
+    .site-main-inner::after {
+        content: "";
+        display: block; /**必要**/
+        clear: both;
+    }
+
+    .content {
+        height: 400px;
+        width: 70%;
+        background-color: #ddd;
+        float: left;
+    }
+
+    .sidebar {
+        height: 400px;
+        width: 30%;
+        background-color: #ccc;
+        float: right;
+    }
+</style>
+
+<div class="container site-main">
+
+    <div class="site-main-inner">
+
+        <div class="chart-container" style="position: relative; height:0vh; width:51vw">
+            <!--外面的height調距離(好像條外層空間可正可負)，width調寬度-->
+            <canvas id="LineChart" style="height:390px; width:100%"></canvas><!--裡面的height調高度，width調??-->
+        </div>
+
+        <div class="sidebar">
+            <form method="post" action="">
+                <table>
+                    <tr>
+                        <td>編號:</td>
+                        <td><input type="number" name="Cid" value=@ViewBag.id readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>資金:</td>
+                        <td><input type="number" name="Cash" value=@ViewBag.cash readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>結清次數:</td>
+                        <td><input type="number" name="Position" value=@Model.count readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>累積損益:</td>
+                        <td><input type="number" name="Profit" value=@ViewBag.addupprofit readonly /></td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+    var jsErrDev = @Html.Raw(jsonErrDev);
+    var ctx = document.getElementById("LineChart");
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels:@Html.Raw(jsonTime),
+            datasets: [{
+                label: "資金",
+                data: jsErrDev.price,
+                lineTension: 0,//預設圓弧
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                fontSize: 20,
+                text: '累積損益變化'
+                },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: '結清次數',
+                        fontSize: 15
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: '元',
+                        fontSize: 15
+                    },
+                    ticks: {
+                        stepSize: Math.round((jsErrDev.UpL - jsErrDev.DownL)*3/10),
+                        //reverse: true,
+                    }
+
+
+
+
+                }]
+            }
+        }
+    }
+    );
+</script>
+
+
+
+
+

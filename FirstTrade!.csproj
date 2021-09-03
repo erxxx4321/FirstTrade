@@ -140,12 +140,16 @@
     <Compile Include="Models\EFModels\stockprice.cs" />
     <Compile Include="Models\EFModels\sysdiagram.cs" />
     <Compile Include="Models\Services\DDisplay.cs" />
+    <Compile Include="Models\Services\load.cs" />
+    <Compile Include="Models\Services\PageBox.cs" />
+    <Compile Include="Models\Services\PagingRequest.cs" />
     <Compile Include="Models\Services\RegistersCriteria.cs" />
     <Compile Include="Models\Services\Users.cs" />
     <Compile Include="Models\ViewModels\CashRelateVM.cs" />
     <Compile Include="Models\ViewModels\CreateVM.cs" />
     <Compile Include="Models\ViewModels\LoginVM.cs" />
     <Compile Include="Models\ViewModels\TeacherAreaVM.cs" />
+    <Compile Include="Models\ViewModels\UserAreaVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +235,8 @@
     <Content Include="Views\Home\UserArea.cshtml" />
     <Content Include="Views\Home\TeacherArea.cshtml" />
     <Content Include="Views\Home\MemberDetails.cshtml" />
+    <Content Include="Views\Home\UserTotalArea.cshtml" />
+    <Content Include="Views\Home\MemberDetailTotalArea.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

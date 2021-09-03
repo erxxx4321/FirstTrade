@@ -28,6 +28,7 @@ namespace FirstTrade_.Controllers
 
         public ActionResult Test1(RegistersCriteria inject, CashRelateVM injectmoney, DateTime? Date123, String Stock123)
         {
+            var oinject = inject; var oinjectmoney = injectmoney;
             #region 日期
             var curdb = db.stockprices.ToList();
             int ct;
@@ -40,6 +41,14 @@ namespace FirstTrade_.Controllers
             {
                 string SDate = Convert.ToDateTime(Date123).ToString("yyyy-MM-dd");
                 curdb = curdb.Where(x => x.年月日 == SDate).ToList();
+
+                if (curdb == null || curdb.Count == 0)
+                {
+                    ModelState.AddModelError(string.Empty, "選擇日期無資料");
+                    inject = oinject;
+                    injectmoney = oinjectmoney;
+                    curdb = db.stockprices.ToList();
+                }
                 inject.StartDate = curdb[0].id;
             }
             if (inject.Total > 0)
