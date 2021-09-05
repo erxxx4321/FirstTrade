@@ -9,8 +9,9 @@
     var recordlength = ViewBag.recordlength;
 }
 
-<div class="container d-flex flex-lg-row justify-content-lg-evenly flex-column justify-content-center mt-4 mb-4">
 
+
+<div class="container d-flex flex-lg-row justify-content-lg-evenly flex-column justify-content-center mt-4 mb-4">
     @* 左區 *@
     <div class="d-flex flex-column justify-content-center align-items-center align-items-lg-start">
         <div id="lineChart"></div>
@@ -31,54 +32,51 @@
     </div>
 
     @* 右區 *@
-<div class="mt-lg-5 right">
-    <form method="post" class="d-flex d-lg-inline-block justify-content-evenly flex-wrap playform">
-        <div class="mb-3">
-            <label class="me-1">編號</label>
-            <input type="number" name="Cid" value=@ViewBag.Cid class="p-1 border rounded" readonly />
+    <div class="mt-lg-5 right">
+        <form method="post" class="d-flex d-lg-inline-block justify-content-evenly flex-wrap playform">
+            <div class="mb-3">
+                <label class="me-1">編號</label>
+                <input type="number" name="Cid" value=@ViewBag.Cid class="p-1 border rounded" readonly />
+            </div>
+            <div class="mb-3">
+                <label class="me-1">資金</label>
+                <input type="number" name="Cash" value=@ViewBag.Cash class="p-1 border rounded" readonly />
+            </div>
+            <div class="mb-3">
+                <label class="me-1">部位</label>
+                <input type="number" name="Position" value=@ViewBag.Position class="p-1 border rounded" readonly />
+            </div>
+            <div class="mb-3">
+                <label class="me-1">損益</label>
+                <input type="number" name="Profit" value=@ViewBag.Profit class="p-1 border rounded" readonly />
+            </div>
+            <div class="mb-3">
+                <label class="me-1 wenk-length--small" data-wenk="正數: 買入, 負數: 賣出，0: 不動" data-wenk-pos="top">數量</label>
+                <input type="number" name="Status" class="p-1 border rounded" value=@ViewBag.Status />
+            </div>
+            <div class="mb-3">
+                <label class="me-1">買入價</label>
+                <input type="number" name="BuyCost" class="p-1 border rounded" value=@ViewBag.BuyCost readonly />
+            </div>
+            <div class="mb-3">
+                <label class="me-1">幾天後</label>
+                <input type="text" name="Go" class="p-1 border rounded">
+            </div>
+            <div class="mb-3">
+                <label class="me-1">目前天數</label>
+                <input type="text" name="Total" value="@ViewBag.Total" class="p-1 border rounded" readonly />
+            </div>
+            <div class="mb-3">
+                <input type="text" name="StartDate" value="@ViewBag.StartDate" hidden />
+            </div>
+            <div>
+                <button type="submit" class="ft-btn submitBtn rounded">提交</button>
+            </div>
+        </form>
+        <div id="stockInfo" class="circle ft-btn" data-wenk="介面功能教學" data-wenk-pos="left">
+            <a>?</a>
         </div>
-        <div class="mb-3">
-            <label class="me-1">資金</label>
-            <input type="number" name="Cash" value=@ViewBag.Cash class="p-1 border rounded" readonly />
-        </div>
-        <div class="mb-3">
-            <label class="me-1">部位</label>
-            <input type="number" name="Position" value=@ViewBag.Position class="p-1 border rounded" readonly />
-        </div>
-        <div class="mb-3">
-            <label class="me-1">損益</label>
-            <input type="number" name="Profit" value=@ViewBag.Profit class="p-1 border rounded" readonly />
-        </div>
-        <div class="mb-3">
-            <label class="me-1 wenk-length--small" data-wenk="正數: 買入, 負數: 賣出，0: 不動" data-wenk-pos="top">數量</label>
-            <input type="number" name="Status" class="p-1 border rounded" value=@ViewBag.Status />
-        </div>
-        <div class="mb-3">
-            <label class="me-1">買入價</label>
-            <input type="number" name="BuyCost" class="p-1 border rounded" value=@ViewBag.BuyCost readonly />
-        </div>
-        <div class="mb-3">
-            <label class="me-1">幾天後</label>
-            <input type="text" name="Go" class="p-1 border rounded">
-        </div>
-        <div class="mb-3">
-            <label class="me-1">目前天數</label>
-            <input type="text" name="Total" value="@ViewBag.Total" class="p-1 border rounded" readonly />
-        </div>
-        <div class="mb-3">
-            <input type="text" name="StartDate" value="@ViewBag.StartDate" hidden />
-        </div>
-        <div>
-            <button type="submit" class="ft-btn submitBtn rounded">提交</button>
-        </div> 
-    </form>
-    <div id="stockInfo" class="circle ft-btn" data-wenk="介面功能教學" data-wenk-pos="left">
-        <a>?</a>
     </div>
-</div>
-
-
-
 </div>
 
 <div class="container pltable">
@@ -240,9 +238,6 @@
 
 
 
-
-
-
 <style>
     .right {
         position: relative;
@@ -354,8 +349,8 @@
         .pltable {
             width: 70%;
         }
-    } 
-    
+    }
+
     input:focus {
         outline-color: var(--lightyellow);
     }
@@ -611,9 +606,11 @@
 <script>
     const stockInfo = document.getElementById("stockInfo");
     const layer = document.querySelector(".layer");
+    const nav = document.getElementById("nav");
 
     stockInfo.addEventListener("click", () => {
         layer.style.display = "block"
+        nav.style.display = "none"
     })
 
     const lineList = [
@@ -725,5 +722,6 @@
 
     closeInfoBtn.addEventListener("click", () => {
         layer.style.display = "none";
+        nav.style.display = "block";
     })
 </script>

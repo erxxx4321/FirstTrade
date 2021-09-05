@@ -2,4 +2,108 @@
     ViewBag.Title = "Home Page";
 }
 
-<h2>首頁!!</h2>
+
+<div style="position:relative; width: 100%; height: 100vh;">
+    <h2 class="text-light d-inline animate__animated animate__fadeInLeft">First Trade</h2>
+    <span class="text-light animate__animated animate__bounceInDown">!</span>
+
+    <div style="position:absolute; width: 100%; bottom: 35%; border-bottom: 15px solid var(--yellow)"></div>
+    <div class="arrows">
+        <div class="d-flex animate__animated animate__slideInLeft">
+            <p class="d-inline text-light me-2 align-self-end">想先了解股票知識</p>
+            <a class="ft-light-text" href="/Home/Tips">
+                <i class="fas fa-angle-double-right"></i>
+            </a>
+        </div>
+        <div class="animate__animated animate__slideInLeft animate__delay-1s d-flex">
+            <p class="d-inline text-light me-2 align-self-end">想直接開始遊戲</p>
+            <a class="ft-light-text" href="/Stock/Test1" onclick="callLoader()">
+                <i class="fas fa-angle-double-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+
+    body {
+        background: var(--black);
+        overflow: hidden;
+    }
+
+    h2 {
+        position: absolute;
+        left: 5%;
+        bottom: 40%;
+        z-index: 1;
+        font-size: 80px;
+    }
+
+    span {
+        display: none;
+        position: absolute;
+        bottom: 18%;
+        z-index: 1;
+        font-size: 350px;
+    }
+
+    .arrows {
+        position: absolute;
+        left: 5%;
+        bottom: 18%;
+    }
+
+    i {
+        font-size: 50px;
+    }
+
+    @@media screen and (min-width: 576px) {
+        span {
+            display: block;
+            left: 68%;
+        }
+    }
+
+    @@media screen and (min-width: 768px) {
+        h2 {
+            font-size: 120px;
+        }
+
+        span {
+            font-size: 400px;
+            left: 76%;
+        }
+    }
+
+    @@media screen and (min-width: 992px) {
+        h2 {
+            font-size: 140px;
+        }
+
+        span {
+            font-size: 400px;
+            left: 70%;
+        }
+    }
+
+    @@media screen and (min-width: 1200px) {
+
+        p {
+            font-size: 1.5rem;
+        }
+
+        span {
+            font-size: 450px;
+            left: 64%;
+            bottom: 15%;
+        }
+
+        .arrows {
+            bottom: 15%;
+        }
+
+        i {
+            font-size: 70px;
+        }
+    }
+</style>
