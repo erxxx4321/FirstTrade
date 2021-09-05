@@ -1,100 +1,106 @@
 ﻿@using FirstTrade_.Models.Services
 @model IEnumerable<FirstTrade_.Models.ViewModels.UserAreaVM>
-
 @{
     ViewBag.Title = "MemberDetails";
     var pagebox = ViewBag.Pagebox as PageBox;
 }
 
-<div style="font-size:20px">
-    @Html.ActionLink("返回學生列表", "TeacherArea")  /   @Html.ActionLink("查看統計", "MemberDetailTotalArea")
-</div>
 
-<h2>學生 @ViewBag.UserAccount 的交易明細:</h2>
+<div class="container-sm">
+    <div class="mb-3">
+        <div style="font-size:20px">
+            @Html.ActionLink("返回學生列表", "TeacherArea")  /   @Html.ActionLink("查看統計", "MemberDetailTotalArea")
+        </div>
 
+        <h3>學生 @ViewBag.UserAccount <span class="h4">的交易明細:</span></h3>
+    </div>
 
+    <table class="table border" style="margin: 0 auto">
+        <thead class="ft-light-bg">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.stocknumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.direction)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.buycost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sellprice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.position)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.profit)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.date)
+                </th>
+            </tr>
+        </thead>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.stocknumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.direction)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.buycost)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.sellprice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.position)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.profit)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.date)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.stocknumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.direction)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.buycost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.sellprice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.position)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.profit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.date)
-            </td>
-        </tr>
-    }
-
-</table>
-
-<p>共 @pagebox.TotalRecords 筆</p>
-<p>現在是第 @pagebox.PageNumber 頁 / 總頁數:@pagebox.Pages</p>
-
-<nav aria-label="Page navigation">
-    <ul class="pagination">
-        <li>
-            <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        @{
-            string url = "";
-            int currentPageNumber = 0;
-            for (int i = 0; i < pagebox.PageBarItemCount; i++)
+        <tbody>
+            @foreach (var item in Model)
             {
-                currentPageNumber = pagebox.PageBarStartNumber + i;
-                url = pagebox.GetUrl(currentPageNumber);
-
-                <li><a href="@url">@currentPageNumber</a></li>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.stocknumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.direction)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.buycost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.sellprice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.position)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.profit)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.date)
+                    </td>
+                </tr>
             }
-        }
+        </tbody>
+    </table>
 
-        <li>
-            <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+    <div class="d-flex flex-column justify-content-center align-items-center mt-4">
+        <p>共 @pagebox.TotalRecords 筆</p>
+        <p>現在是第 @pagebox.PageNumber 頁 / 總頁數 : @pagebox.Pages</p>
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li>
+                    <a class="page-link ft-dark-text ft-light-bg" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                @{
+                    string url = "";
+                    int currentPageNumber = 0;
+                    for (int i = 0; i < pagebox.PageBarItemCount; i++)
+                    {
+                        currentPageNumber = pagebox.PageBarStartNumber + i;
+                        url = pagebox.GetUrl(currentPageNumber);
+
+                        <li><a class="page-link ft-dark-text ft-light-bg" href="@url">@currentPageNumber</a></li>
+                    }
+                }
+
+                <li>
+                    <a class="page-link ft-dark-text ft-light-bg" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

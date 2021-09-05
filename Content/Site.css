@@ -1,24 +1,88 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿/* Global */
+:root {
+    --yellow: #ffe359;
+    --black: #3F3F3F;
+    --lightyellow: #ffec8a;
+    --lightblack: #5c5c5c;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+* {
+    box-sizing: border-box;
+    line-height: 1.4;
+    margin: 0;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+ul {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+body {
+    color: var(--black);
+    margin-top: 70px;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.ft-navbar {
+    width: 100%;
+    background: var(--black);
+    overflow: hidden;
+    position: fixed;
+    padding: 12px;
+    top: 0;
+    z-index: 2;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.4);
+}
+
+.links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.ft-btn {
+    cursor: pointer;
+    background: var(--black);
+    color: var(--yellow);
+}
+
+.ft-btn:hover {
+    background: var(--lightblack);
+    color: var(--lightyellow);
+}
+
+.ft-dark-bg {
+    background: var(--black);
+}
+
+.ft-light-bg {
+    background: var(--yellow);
+}
+
+.ft-dark-text {
+    color: var(--black);
+}
+
+.ft-light-text {
+    color: var(--yellow);
+}
+
+.ft-light-text:hover {
+    color: var(--lightyellow);
+    text-decoration: none;
+    transition: 0.4s;
 }

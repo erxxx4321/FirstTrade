@@ -9,200 +9,123 @@
           integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
           crossorigin="anonymous" />
     <link rel="stylesheet" href="https://unpkg.com/wenk/dist/wenk.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
+    <style type="text/css">
+
+        @@media screen and (min-width: 576px) {
+            .ft-navbar {
+                padding: 0.3rem 0;
+            }
+
+            .header {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .burger {
+                display: none;
+            }
+
+            .active-links {
+                display: none;
+            }
+        }
+
+        @@media screen and (max-width: 576px) {
+            .links {
+                display: none;
+            }
+
+            .burger {
+                display: block;
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                outline: none;
+                transition: 0.3s;
+                font-weight: bold;
+            }
+
+                .burger:hover {
+                    background: var(--yellow);
+                    color: var(--black);
+                    border-color: var(--yellow);
+                }
+
+            .active-links {
+                display: block;
+                width: 100%;
+                background: var(--black);
+                top: 50px;
+                left: 0px;
+                right: 10px;
+                padding-top: 20px;
+            }
+        }
+    </style>
     @Scripts.Render("~/bundles/modernizr")
 </head>
+
 <body>
-    <div class="ft-navbar">
+    <div id="nav" class="ft-navbar">
         <div class="container-lg header">
             @Html.ActionLink("FirstTrade!", "Index", "Home", null, new { @class = "h2 ft-light-text" })
             <ul class="links">
-                <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3 link">
+                <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3">
                     @Html.ActionLink("教師專區", "TeacherArea", "Home", null, new { @class = "h5 ft-light-text" })
                 </li>
-                <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3 link">
+                <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3">
                     @Html.ActionLink("小知識", "Tips", "Home", null, new { @class = "h5 ft-light-text" })
                 </li>
-                <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3 link">
+                <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3">
                     @Html.ActionLink("StockGame", "Test1", "Stock", null, new { @class = "h5 ft-light-text" })
                 </li>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3 link">
+                    <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3">
                         @Html.ActionLink(" " + (User.Identity.Name), "UserArea", "Home", null, new { @class = "h5 ft-light-text far fa-user" })
                     </li>
-                    <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3 link">
+                    <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3">
                         @Html.ActionLink("登出", "Logout", "Home", null, new { @class = "h5 ft-light-text" })
                     </li>
                 }
                 else
                 {
-                    <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3 link">
+                    <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3">
                         @Html.ActionLink("登入", "Login", "Home", new { @class = "h5 ft-light-text" })
                     </li>
-                    <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3 link">
+                    <li class="ps-sm-3 pe-sm-3 pb-sm-0 pb-3">
                         @Html.ActionLink("註冊", "SignUp", "Home", new { @class = "h5 ft-light-text" })
                     </li>
                 }
             </ul>
-                <button id="burger" class="ft-dark-bg ft-light-text">+</button>
-            </div>
+            <button class="ft-dark-bg ft-light-text burger">+</button>
         </div>
-    
-    <div>
-        @RenderBody()
-        @*<hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - FirstTrade!</p>
-            </footer>*@
     </div>
 
-    <script type="text/javascript">
-        const burger = document.getElementById("burger");
-        const links = document.querySelector(".links");
+    @RenderBody()
+    @*<hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - FirstTrade!</p>
+        </footer>*@
 
-        burger.addEventListener("click", () => {
-            links.classList.toggle("active-links")
-        })
-    </script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<script>
+    const burger = document.querySelector(".burger");
+    const links = document.querySelector(".links");
+
+    burger.addEventListener("click", () => {
+        links.classList.toggle("active-links")
+    })
+</script>
 <style>
-    /* Global */
-    :root {
-        --yellow: #ffe359;
-        --black: #3F3F3F;
-        --lightyellow: #ffec8a;
-        --lightblack: #5c5c5c;
-    }
-
-    * {
-        box-sizing: border-box;
-        line-height: 1.4;
-        list-style: none;
-    }
-
-    .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
-        margin-bottom: 0;
-    }
-
-    ul {
-        margin: 0;
-    }
-
-    body {
-        color: var(--black);
-    }
-
-    a {
-        text-decoration: none;
-    }
-
-    img {
-        width: 100%;
-        height: auto;
-    }
-
-    .ft-btn {
-        cursor: pointer;
-        background: var(--black);
-        color: var(--yellow);
-    }
-
-    .ft-btn:hover {
-        background: var(--lightblack);
-        color: var(--lightyellow);
-    }
-
-    .ft-dark-bg {
-        background: var(--black);
-    }
-
-    .ft-light-bg {
-        background: var(--yellow);
-    }
-
-    .ft-dark-text {
-        color: var(--black);
-    }
-
-    .ft-light-text {
-        color: var(--yellow);
-    }
-
-    .ft-light-text:hover {
-        color: var(--lightyellow);
-        text-decoration: none;
-        transition: 0.4s;
-    }
-
-    .ft-navbar {
-        background: var(--black);
-        padding: 12px;
-    }
-
-    .links {
-        display: none;
-    }
-
-    .active-links {
-        display: block;
-        position: absolute;
-        width: 100%;
-        background: var(--black);
-        top: 50px;
-        left: 0px;
-        right: 10px;
-        padding-top: 20px;
-        z-index: 1;
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.4); 
-    }
-
-    #burger {
-        display: block;
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        outline: none;
-        transition: 0.3s;
-        font-weight: bold;
-    }
-
-    #burger:hover {
-            background: var(--yellow);
-            color: var(--black);
-            border-color: var(--yellow);
-        }
-
-    @@media screen and (min-width: 576px) {
-        .ft-navbar {
-            padding: 0.3rem 0;
-        }
-
-        .header {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .links {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-evenly;
-            align-items: center;
-        }
-
-        #burger {
-            display: none;
-        }
-
-        .active-links {
-            display: none;
-        }
-    }
 </style>

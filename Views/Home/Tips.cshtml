@@ -3,15 +3,6 @@
     ViewBag.Title = "Tips";
 }
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</head>
-
 <body>
     <div class="mt-4 container">
         <h1 align="center"><strong>股市小知識</strong></h1>
@@ -187,6 +178,12 @@
             left: 0;
             right: 0;
             margin: auto;
+        }
+
+        @@media screen and (max-width: 576px) {
+            .frame {
+                width: 100%;
+            }
         }
     </style>
 </body>

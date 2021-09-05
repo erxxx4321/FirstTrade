@@ -23,7 +23,8 @@ namespace FirstTrade_
                       "~/Scripts/bootstrap.bundle.min.js"));
 
             bundles.Add(new Bundle("~/Content/css").Include(
-                      "~/Content/bootstrap.min.css"));
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/Site.css"));
         }
     }
 }

@@ -5,7 +5,7 @@
 
 @using (Html.BeginForm())
 {
-    <div class="container-fluid">
+    <div class="container-fluid d-flex">
         <div class="row main-content text-center">
             <div class="col-md-4 text-center company__info ft-dark-bg">
                 <h4 class="company_title ft-light-text">FirstTrade!</h4>
@@ -15,11 +15,11 @@
                     <div class="row">
                         <h3 class="ft-dark-text p-4">註冊</h3>
                     </div>
-                    <div class="row">
+                    <div class="row justify-content-center">
                         <form class="form-group" action="action.js">
                             <div>
                                 <span class="h5 me-1">您的身分是 </span>
-                                <span>
+                                <span class="d-block d-sm-inline">
                                     <input type="radio" name="Roles" id="teacher" value="teacher" onclick="enableInput()" />
                                     <label for="teacher">老師</label>
                                     <input type="radio" name="Roles" id="student" value="student" onclick="enableInput()"/>
@@ -64,7 +64,6 @@
         }
 
         .company__info {
-            background-color: #008080;
             border-top-left-radius: 20px;
             border-bottom-left-radius: 20px;
             display: flex;

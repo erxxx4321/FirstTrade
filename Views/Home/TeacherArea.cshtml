@@ -6,56 +6,63 @@
     var pagebox = ViewBag.Pagebox as PageBox;
 }
 
-<h2>學生列表</h2>
+<div class="container">
+    <h3 class="mb-3">學生列表</h3>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MemberAccount)
-        </th>
-        <th></th>
-    </tr>
+    <table class="table border">
+        <thead class="ft-light-bg">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.MemberAccount)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MemberAccount)
-            </td>
-            <td>
-                @Html.ActionLink("交易明細", "MemberDetails", new { userid = item.MemberNumber, useraccount = item.MemberAccount })
-            </td>
-        </tr>
-    }
-
-</table>
-
-<p>共 @pagebox.TotalRecords 筆</p>
-<p>現在是第 @pagebox.PageNumber 頁 / 總頁數:@pagebox.Pages</p>
-
-<nav aria-label="Page navigation">
-    <ul class="pagination">
-        <li>
-            <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        @{
-            string url = "";
-            int currentPageNumber = 0;
-            for (int i = 0; i < pagebox.PageBarItemCount; i++)
+        <tbody>
+            @foreach (var item in Model)
             {
-                currentPageNumber = pagebox.PageBarStartNumber + i;
-                url = pagebox.GetUrl(currentPageNumber);
-
-                <li><a href="@url">@currentPageNumber</a></li>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MemberAccount)
+                    </td>
+                    <td>
+                        @Html.ActionLink("交易明細", "MemberDetails", new { userid = item.MemberNumber, useraccount = item.MemberAccount })
+                    </td>
+                </tr>
             }
-        }
+        </tbody>
+    </table>
 
-        <li>
-            <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+    <div class="d-flex flex-column justify-content-center align-items-center mt-4">
+        <p>共 @pagebox.TotalRecords 筆</p>
+        <p>現在是第 @pagebox.PageNumber 頁 / 總頁數:@pagebox.Pages</p>
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li>
+                    <a class="page-link ft-dark-text ft-light-bg" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                @{
+                    string url = "";
+                    int currentPageNumber = 0;
+                    for (int i = 0; i < pagebox.PageBarItemCount; i++)
+                    {
+                        currentPageNumber = pagebox.PageBarStartNumber + i;
+                        url = pagebox.GetUrl(currentPageNumber);
+
+                        <li><a class="page-link ft-dark-text ft-light-bg" href="@url">@currentPageNumber</a></li>
+                    }
+                }
+
+                <li>
+                    <a class="page-link ft-dark-text ft-light-bg" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
