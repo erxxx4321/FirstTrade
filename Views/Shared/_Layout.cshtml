@@ -46,17 +46,15 @@
                     </li>
                 }
             </ul>
-                <button id="burger" class="ft-dark-bg ft-light-text">+</button>
-            </div>
+            <button class="ft-dark-bg ft-light-text burger">+</button>
         </div>
-    
-    <div>
-        @RenderBody()
-        @*<hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - FirstTrade!</p>
-            </footer>*@
     </div>
+
+    @RenderBody()
+    @*<hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - FirstTrade!</p>
+        </footer>*@
 
     <script type="text/javascript">
         const burger = document.getElementById("burger");

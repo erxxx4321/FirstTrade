@@ -7,92 +7,104 @@
     var pagebox = ViewBag.Pagebox as PageBox;
 }
 
-<div style="font-size:20px">
-    @Html.ActionLink("查看統計", "UserTotalArea")
-</div>
-<h2>@ViewBag.UserMsg 以下是您的交易明細: </h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.stocknumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.direction)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.buycost)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.sellprice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.position)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.profit)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.date)
-        </th>
-        <th></th>
-    </tr>
+<div class="container">
+    <div class="mb-3">
+        <div style="font-size:20px">
+            @Html.ActionLink("查看統計", "UserTotalArea")
+        </div>
+        <h3>@ViewBag.UserMsg <span class="h4">以下是您的交易明細:</span></h3>
+    </div>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.stocknumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.direction)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.buycost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.sellprice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.position)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.profit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.date)
-            </td>
-        </tr>
-    }
+    <table class="table border">
+        <thead class="ft-light-bg">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.stocknumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.direction)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.buycost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sellprice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.position)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.profit)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.date)
+                </th>
+            </tr>
+        </thead>
 
-</table>
 
-<p>共 @pagebox.TotalRecords 筆</p>
-<p>現在是第 @pagebox.PageNumber 頁 / 總頁數:@pagebox.Pages</p>
-
-<nav aria-label="Page navigation">
-    <ul class="pagination">
-        <li>
-            <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        @{
-            string url = "";
-            int currentPageNumber = 0;
-            for (int i = 0; i < pagebox.PageBarItemCount; i++)
-            {
-                currentPageNumber = pagebox.PageBarStartNumber + i;
-                url = pagebox.GetUrl(currentPageNumber);
-
-                <li><a href="@url">@currentPageNumber</a></li>
-            }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.stocknumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.direction)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.buycost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sellprice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.position)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.profit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+            </tr>
         }
 
-        <li>
-            <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+    </table>
+
+    @* 頁碼 *@
+    <div class="d-flex flex-column justify-content-center align-items-center mt-4">
+        <p>共 @pagebox.TotalRecords 筆</p>
+        <p>現在是第 @pagebox.PageNumber 頁 / 總頁數 : @pagebox.Pages</p>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link ft-dark-text ft-light-bg" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                @{
+                    string url = "";
+                    int currentPageNumber = 0;
+                    for (int i = 0; i < pagebox.PageBarItemCount; i++)
+                    {
+                        currentPageNumber = pagebox.PageBarStartNumber + i;
+                        url = pagebox.GetUrl(currentPageNumber);
+
+                        <li><a href="@url" class="page-link ft-dark-text ft-light-bg">@currentPageNumber</a></li>
+                    }
+                }
+
+                <li class="page-item">
+                    <a class="page-link ft-dark-text ft-light-bg" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</div>
+
