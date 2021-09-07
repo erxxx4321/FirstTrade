@@ -81,28 +81,45 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item">
-                    <a class="page-link ft-dark-text ft-light-bg" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                @{
-                    string url = "";
-                    int currentPageNumber = 0;
-                    for (int i = 0; i < pagebox.PageBarItemCount; i++)
-                    {
-                        currentPageNumber = pagebox.PageBarStartNumber + i;
-                        url = pagebox.GetUrl(currentPageNumber);
+                    @{
+                        string url0 = "";
+                        if (pagebox.PageNumber - 1 > 0)
+                        {
+                            url0 = pagebox.GetUrl(pagebox.PageNumber - 1);
+                            <a class="page-link ft-dark-text ft-light-bg" href="@url0" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        }
 
-                        <li><a href="@url" class="page-link ft-dark-text ft-light-bg">@currentPageNumber</a></li>
                     }
+                </li>
+                    @{
+                        string url = "";
+                        int currentPageNumber = 0;
+                        for (int i = 0; i < pagebox.PageBarItemCount; i++)
+                        {
+                            currentPageNumber = pagebox.PageBarStartNumber + i;
+                            url = pagebox.GetUrl(currentPageNumber);
+
+                            <li><a href="@url" class="page-link ft-dark-text ft-light-bg">@currentPageNumber</a></li>
+                        }
+                    }
+
+            <li class="page-item">
+                @{
+                    string url1 = "";
+                    if (pagebox.PageNumber + 1 <= pagebox.Pages)
+                    {
+                        url1 = pagebox.GetUrl(pagebox.PageNumber + 1);
+                        <a class="page-link ft-dark-text ft-light-bg" href="@url1" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    }
+
                 }
 
-                <li class="page-item">
-                    <a class="page-link ft-dark-text ft-light-bg" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
+            </li>
+                </ul>
         </nav>
     </div>
 

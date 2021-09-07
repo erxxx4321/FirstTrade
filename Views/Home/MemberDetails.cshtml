@@ -79,9 +79,17 @@
         <nav aria-label="Page navigation">
             <ul class="pagination">
                 <li>
-                    <a class="page-link ft-dark-text ft-light-bg" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
+                    @{
+                        string url0 = "";
+                        if (pagebox.PageNumber - 1 > 0)
+                        {
+                            url0 = pagebox.GetUrl(pagebox.PageNumber - 1);
+                            <a class="page-link ft-dark-text ft-light-bg" href="@url0" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        }
+
+                    }
                 </li>
                 @{
                     string url = "";
@@ -95,11 +103,19 @@
                     }
                 }
 
-                <li>
-                    <a class="page-link ft-dark-text ft-light-bg" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
+            <li>
+                @{
+                    string url1 = "";
+                    if (pagebox.PageNumber + 1 <= pagebox.Pages)
+                    {
+                        url1 = pagebox.GetUrl(pagebox.PageNumber + 1);
+                        <a class="page-link ft-dark-text ft-light-bg" href="@url1" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    }
+
+                }
+            </li>
             </ul>
         </nav>
     </div>
