@@ -36,35 +36,35 @@
         <form method="post" class="d-flex d-lg-inline-block justify-content-evenly flex-wrap playform">
             <div class="mb-3">
                 <label class="me-1">編號</label>
-                <input type="number" name="Cid" value=@ViewBag.Cid class="p-1 border rounded" readonly />
+                <input type="number" name="Cid" value=@ViewBag.Cid class="p-1 border rounded input-disabled" readonly/>
             </div>
             <div class="mb-3">
                 <label class="me-1">資金</label>
-                <input type="number" name="Cash" value=@ViewBag.Cash class="p-1 border rounded" readonly />
+                <input type="number" name="Cash" value=@ViewBag.Cash class="p-1 border rounded input-disabled" readonly/>
             </div>
             <div class="mb-3">
                 <label class="me-1">部位</label>
-                <input type="number" name="Position" value=@ViewBag.Position class="p-1 border rounded" readonly />
+                <input type="number" name="Position" value=@ViewBag.Position class="p-1 border rounded input-disabled" readonly/>
             </div>
             <div class="mb-3">
                 <label class="me-1">損益</label>
-                <input type="number" name="Profit" value=@ViewBag.Profit class="p-1 border rounded" readonly />
+                <input type="number" name="Profit" value=@ViewBag.Profit class="p-1 border rounded input-disabled" readonly/>
             </div>
             <div class="mb-3">
                 <label class="me-1 wenk-length--small" data-wenk="正數: 買入, 負數: 賣出，0: 不動" data-wenk-pos="top">數量</label>
-                <input type="number" name="Status" class="p-1 border rounded" value=@ViewBag.Status />
+                <input type="number" name="Status" class="p-1 border rounded" value=@ViewBag.Status/>
             </div>
             <div class="mb-3">
                 <label class="me-1">買入價</label>
-                <input type="number" name="BuyCost" class="p-1 border rounded" value=@ViewBag.BuyCost readonly />
+                <input type="number" name="BuyCost" class="p-1 border rounded input-disabled" value=@ViewBag.BuyCost readonly/>
             </div>
             <div class="mb-3">
                 <label class="me-1">幾天後</label>
-                <input type="text" name="Go" class="p-1 border rounded">
+                <input type="text" name="Go" class="p-1 border rounded" />
             </div>
             <div class="mb-3">
                 <label class="me-1">目前天數</label>
-                <input type="text" name="Total" value="@ViewBag.Total" class="p-1 border rounded" readonly />
+                <input type="text" name="Total" value="@ViewBag.Total" class="p-1 border rounded input-disabled" readonly/>
             </div>
             <div class="mb-3">
                 <input type="text" name="StartDate" value="@ViewBag.StartDate" hidden />
@@ -236,9 +236,12 @@
     </div>
 </div>
 
-
-
 <style>
+    .input-disabled {
+        background-color: #FAFAFA;
+        cursor: default;
+    }
+
     .right {
         position: relative;
     }
@@ -256,6 +259,7 @@
         justify-content: center;
         align-items: center;
         font-size: 20px;
+        z-index: 10;
     }
 
     .layer {
@@ -267,6 +271,7 @@
         height: 100%;
         background: rgba(63, 63, 63, 0.95);
         color: #fff;
+        z-index: 999;
     }
 
     .layerContent {
