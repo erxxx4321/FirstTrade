@@ -1,7 +1,7 @@
 ﻿@using FirstTrade_.Models.Services
 
 
-@model FirstTrade_.Models.Services.DDisplay
+@model FirstTrade_.Models.ViewModels.GameDisplayVM
 
 @{
     var jsonErrDev = Json.Encode(Model);
@@ -21,7 +21,7 @@
                 <label class="me-2">選擇股票</label>
                 <input type="text" name="Stock123" class="form-control" style="width: 150px" />
             </div>
-            <div class="me-2 mt-2 mt-sm-0 d-flex flex-row align-items-center" ">
+            <div class="me-2 mt-2 mt-sm-0 d-flex flex-row align-items-center" >
                 <label class="me-2">選擇日期</label>
                 <input type="date" name="Date123" class="form-control" style="width: 170px;" max="2005-08-26" /><!--叫Date0時還不給binding...-->
             </div>
@@ -389,9 +389,9 @@
     }
 
     var jsErrDev = @Html.Raw(jsonErrDev);
-    var dates = jsErrDev.DDate;
-    var data = jsErrDev.DData;
-    var volumes = jsErrDev.DVolumn;
+    var dates = jsErrDev.GameDates;
+    var data = jsErrDev.GameDatas;
+    var volumes = jsErrDev.GameVolumns;
 
     var dataMA5 = calculateMA(5, data);
     var dataMA10 = calculateMA(10, data);
@@ -402,7 +402,7 @@
         color: colorList,
         title: {
             left: 'center',
-            text: jsErrDev.stockname
+            text: jsErrDev.StockName
         },
         legend: {
             top: 30,

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace FirstTrade_.Models.ViewModels
 {
-    public class CreateVM
+    public class SignupVM
     {
         [Required]
         public string Account { get; set; }

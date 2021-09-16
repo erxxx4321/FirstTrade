@@ -5,7 +5,7 @@ using System.Web;
 
 namespace FirstTrade_.Models.Services
 {
-    public class RegistersCriteria
+    public class RegistersCriteriaVM
     {
         public int Go { get; set; }
         public int Total { get; set; }
@@ -19,6 +19,11 @@ namespace FirstTrade_.Models.Services
         public List<double?> price { get; set; }
         public double? UpL { get; set; }
         public double? DownL { get; set; }
-
+        public void UDLimit(StockVM combine,int count)
+        {
+            combine.UpL = combine.price.Max();
+            combine.DownL = combine.price.Min();
+            combine.count = count;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FirstTrade_.Models.EFModels;
+using FirstTrade_.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,24 @@ using System.Web.Security;
 
 namespace FirstTrade_.Models.Services
 {
-    public class Users
+    public class UsersLogin
     {
+
         private Model1 db = new Model1();
 
         private List<UserEntity> AllUsers = new List<UserEntity>();
+
+        public class UserEntity
+        {
+            public string Account { get; set; }
+            public string Password { get; set; }
+            public string Roles { get; set; }
+        }
+
+        public UsersLogin()
+        {
+            initData();
+        }
 
         public void initData()
         {
@@ -24,16 +38,16 @@ namespace FirstTrade_.Models.Services
 
         }
 
-        public Users()//建構式
-        {
-            initData();
-        }
-
         public bool IsValid(string account, string password)
         {
             var item = AllUsers.Where(x => string.Compare(x.Account, account, true) == 0).FirstOrDefault();//先檢查帳號
             if (item == null) return false;
             return (string.Compare(item.Password, password, true) == 0);//檢查密碼
+        }
+
+        public void RecordID(string account)
+        {
+            CashRelateVM.Cid = db.customers.Where(x => string.Compare(x.Account, account, true) == 0).FirstOrDefault().id;
         }
 
         public string ProcessLogin(string account, bool rememberMe, out HttpCookie cookie)//out好像是傳出還是影響到外面變數的樣子?
@@ -58,10 +72,5 @@ namespace FirstTrade_.Models.Services
         }
     }
 
-    public class UserEntity
-    {
-        public string Account { get; set; }
-        public string Password { get; set; }
-        public string Roles { get; set; }
-    }
+
 }

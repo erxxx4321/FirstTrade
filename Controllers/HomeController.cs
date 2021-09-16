@@ -14,7 +14,6 @@ namespace FirstTrade_.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private Model1 db = new Model1();
         public ActionResult Index()
         {
             return View();
@@ -30,7 +29,7 @@ namespace FirstTrade_.Controllers
         [HttpPost]
         public ActionResult Login(LoginVM formData)
         {
-            var biz = new Users();
+            var biz = new UsersLogin();
             if (!biz.IsValid(formData.Account, formData.Password))
             {
                 ModelState.AddModelError(string.Empty, "帳號或密碼有誤");
@@ -38,12 +37,11 @@ namespace FirstTrade_.Controllers
 
             if (ModelState.IsValid)
             {
-                CashRelateVM.Cid = db.customers.Where(x => string.Compare(x.Account, formData.Account, true) == 0).FirstOrDefault().id;
-                //不依靠form的功能
+                biz.RecordID(formData.Account);
                 HttpCookie cookie;
                 var returnUrl = biz.ProcessLogin(formData.Account, false, out cookie);
 
-                Response.Cookies.Add(cookie);//取得cookie物件並加入
+                Response.Cookies.Add(cookie);
                 return Redirect(returnUrl);
             }
             else
@@ -62,32 +60,22 @@ namespace FirstTrade_.Controllers
         [AllowAnonymous]
         [HttpPost]
         //[ValidateAntiForgeryToken]//加了好像就不能用
-        public ActionResult SignUp(CreateVM cinput)
+        public ActionResult SignUp(SignupVM cinput)
         {
-            if (ModelState.IsValid)
+            var sign = new UsersSignup();
+
+            sign.Create(cinput.Account, cinput.Password, cinput.Roles);
+
+            try
             {
-                db.customers.Add(new customer { Cash = 1000000, Position = 0, Profit = 0, Status = 0, Account = cinput.Account, Password = cinput.Password, Roles = cinput.Roles });
-                db.SaveChanges();
-                if (cinput.Roles == "student")
-                {
-                    db.groups.Add(new group { Leader = cinput.Leader, Member = db.customers.Where(x => x.Account == cinput.Account).FirstOrDefault().id });
-                    db.SaveChanges();
-                }
-                else if (cinput.Roles == "teacher")
-                {
-                    int? tempid = db.customers.Where(x => string.Compare(x.Account, cinput.Account, true) == 0).FirstOrDefault().id;
-                    db.groups.Add(new group { Leader = tempid, Member = tempid });
-                    db.SaveChanges();
-                }
-                else
-                {
-                    return View();
-                }
-
-                return RedirectToAction("Login");
+                sign.IdentifyRoles(cinput.Account, cinput.Roles, cinput.Leader);
             }
+            catch
+            {
+                return View();
+            }            
 
-            return View();
+            return RedirectToAction("Login");                        
         }
 
         public ActionResult Tips()
@@ -97,149 +85,82 @@ namespace FirstTrade_.Controllers
 
         public ActionResult UserArea(PagingRequest page)
         {
+            //取得身分id用
+            var areaservice = new AreasServices();
             var id = (FormsIdentity)User.Identity;
-            FormsAuthenticationTicket ticket = id.Ticket;
-            string account = ticket.Name;
-            int? tempid = db.customers.Where(x => string.Compare(x.Account, account, true) == 0).FirstOrDefault().id;
+            int? userid = areaservice.GetId(id);
 
-            IQueryable<recordprofit> data = db.recordprofits.Where(x => x.userid == tempid);
+            IQueryable<recordprofit> data = areaservice.GetUserdata(userid);
             int count = data.Count();
-            data = data.OrderByDescending(x => x.id).Skip(page.RecordStartIndex).Take(page.PageSize);
+            data = areaservice.OrderTakedata(data, page);
 
-            List<UserAreaVM> userAreaVM = data.Select(x => new UserAreaVM { id = x.id, userid = x.userid, stocknumber = x.stocknumber, direction = x.direction, buycost = x.buycost, sellprice = x.sellprice, position = x.position, profit = x.profit, date = x.date }).ToList();
+            List<UserAreaVM> userareavm = areaservice.Displaydata(data);
 
+            var pagebox = new PageBox();
+            ViewBag.Pagebox = pagebox.BoxInfo(page, count, "UserArea?");
 
-            ViewBag.Pagebox = new PageBox
-            {
-                TotalRecords = count,
-                PageSize = page.PageSize,
-                PageNumber = page.PageNumber,
-                urlTemplate = "/Home/UserArea?PageNumber={0}"
-            };
-
-            return View(userAreaVM);
+            return View(userareavm);
         }
 
         [Authorize(Roles = "teacher")]
         public ActionResult TeacherArea(PagingRequest page)
         {
+            var areaservice = new AreasServices();
             var id = (FormsIdentity)User.Identity;
-            FormsAuthenticationTicket ticket = id.Ticket;
-            string account = ticket.Name;
-            int? tempid = db.customers.Where(x => string.Compare(x.Account, account, true) == 0).FirstOrDefault().id;
+            int? userid = areaservice.GetId(id);
 
-            IQueryable<group> data = db.groups.Where(x => x.Leader == tempid);
-            int count = data.Count();
-            data = data.OrderBy(x => x.id).Skip(page.RecordStartIndex).Take(page.PageSize);
+            IQueryable<group> list = areaservice.GetList(userid);
+            int count = list.Count();
+            list = areaservice.OrderTakelist(list, page);
 
-            List<TeacherAreaVM> Allmember = data.Select(x => new TeacherAreaVM { MemberNumber = x.Member }).ToList();
-            foreach (var item in Allmember)
-            {
-                item.MemberAccount = db.customers.Where(x => x.id == item.MemberNumber).FirstOrDefault().Account;
-            }
+            List<TeacherAreaVM> member = areaservice.Displaylist(list);
 
-            ViewBag.Pagebox = new PageBox
-            {
-                TotalRecords = count,
-                PageSize = page.PageSize,
-                PageNumber = page.PageNumber,
-                urlTemplate = "/Home/TeacherArea?PageNumber={0}"
-            };
-            return View(Allmember);
+            var pagebox = new PageBox();
+            ViewBag.Pagebox = pagebox.BoxInfo(page, count, "TeacherArea?");
+
+            return View(member);
         }
         [Authorize(Roles = "teacher")]
         public ActionResult MemberDetails(int? userid, string useraccount, PagingRequest page)
         {
+            //防重新整理
             load.userid = userid;
             load.useraccount = useraccount;
             ViewBag.UserAccount = " " + load.useraccount + " ";
-            var id = (FormsIdentity)User.Identity;
-            FormsAuthenticationTicket ticket = id.Ticket;
-            string account = ticket.Name;
-            int? tempid = db.customers.Where(x => string.Compare(x.Account, account, true) == 0).FirstOrDefault().id;
 
-            try
-            {
-                group checkgroup = db.groups.Where(x => x.Member == load.userid).FirstOrDefault();//在null時不能.Leader會跳錯，而且這個錯try還抓不到...這裡其實try沒用了...
-                if (checkgroup == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                int? checkleader = checkgroup.Leader;
-                bool check = checkleader == tempid;
-                if (!check)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-            }
-            catch
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            var areaservice = new AreasServices();
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            IQueryable<recordprofit> data = db.recordprofits.Where(x => x.userid == load.userid);
+            IQueryable<recordprofit> data = areaservice.GetUserdata(load.userid);
             int count = data.Count();
-            data = data.OrderByDescending(x => x.id).Skip(page.RecordStartIndex).Take(page.PageSize);
+            data = areaservice.OrderTakedata(data, page);
 
-            //List<recordprofit> selecteduser = db.recordprofits.Where(x => x.userid == userid ).ToList();
-            List<UserAreaVM> selecteduser = data.Select(x => new UserAreaVM { id = x.id, userid = x.userid, stocknumber = x.stocknumber, direction = x.direction, buycost = x.buycost, sellprice = x.sellprice, position = x.position, profit = x.profit, date = x.date }).ToList();
-            if (selecteduser == null)
-            {
-                return HttpNotFound();
-            }
+            List<UserAreaVM> userareavm = areaservice.Displaydata(data);
 
-            ViewBag.Pagebox = new PageBox
-            {
-                TotalRecords = count,
-                PageSize = page.PageSize,
-                PageNumber = page.PageNumber,
-                urlTemplate = "/Home/MemberDetails?PageNumber={0}"
-            };
-            return View(selecteduser);
+            var pagebox = new PageBox();
+            ViewBag.Pagebox = pagebox.BoxInfo(page, count, "MemberDetails?");
+
+            return View(userareavm);
         }
 
         public ActionResult UserTotalArea()
         {
             var id = (FormsIdentity)User.Identity;
-            FormsAuthenticationTicket ticket = id.Ticket;
-            string account = ticket.Name;
-            int? tempid = db.customers.Where(x => string.Compare(x.Account, account, true) == 0).FirstOrDefault().id;
+            var areasurvice = new AreasServices();
 
-            IQueryable<recordprofit> recordprofits = db.recordprofits.Where(x => x.userid == tempid);
+            int? userid = areasurvice.GetId(id);
+            IQueryable<recordprofit> data = areasurvice.GetUserdata(userid);
 
-            List<int?> price = recordprofits.Select(x => x.profit).ToList();
+            List<int?> profitlist = areasurvice.GetProfitlist(data);
+            List<int> time = areasurvice.GetTimelist(profitlist);
+            List<double?> totalprofitlist = areasurvice.GetTotalprofitlist(profitlist);
 
-            List<int> time = new List<int>();
-            var index = 1;
-            int addup = 0;
+            var combine = new StockVM{price = totalprofitlist};
+            combine.UDLimit(combine, profitlist.Count);
 
-            var tempp = new List<double?>();
-            foreach (double? item in price)
-            {
-                addup += Convert.ToInt32(item);
-                tempp.Add(addup);
-                time.Add(index);
-                index += 1;
-            }
-
-            var combine = new StockVM
-            {
-                price = tempp
-            };
             ViewBag.Time = time;
-            ViewBag.id = tempid;
-            ViewBag.addupprofit = addup;
-            ViewBag.cash = 1000000 + addup;
-
-
-            combine.UpL = combine.price.Max();
-            combine.DownL = combine.price.Min();
-            combine.count = tempp.Count;
+            ViewBag.id = userid;
+            ViewBag.addupprofit = profitlist.Sum();
+            ViewBag.cash = 1000000 + profitlist.Sum();
 
             return View(combine);
         }
@@ -247,36 +168,21 @@ namespace FirstTrade_.Controllers
         public ActionResult MemberDetailTotalArea()
         {
             ViewBag.account = load.useraccount;
-            IQueryable<recordprofit> recordprofits = db.recordprofits.Where(x => x.userid == load.userid);
+            var areasurvice = new AreasServices();
 
-            List<int?> price = recordprofits.Select(x => x.profit).ToList();
+            IQueryable<recordprofit> data = areasurvice.GetUserdata(load.userid);
 
-            List<int> time = new List<int>();
-            var index = 1;
-            int addup = 0;
+            List<int?> profitlist = areasurvice.GetProfitlist(data);
+            List<int> time = areasurvice.GetTimelist(profitlist);
+            List<double?> totalprofitlist = areasurvice.GetTotalprofitlist(profitlist);
 
-            var tempp = new List<double?>();
-            foreach (double? item in price)
-            {
-                addup += Convert.ToInt32(item);
-                tempp.Add(addup);
-                time.Add(index);
-                index += 1;
-            }
+            var combine = new StockVM { price = totalprofitlist };
+            combine.UDLimit(combine, profitlist.Count);
 
-            var combine = new StockVM
-            {
-                price = tempp
-            };
             ViewBag.Time = time;
             ViewBag.id = load.userid;
-            ViewBag.addupprofit = addup;
-            ViewBag.cash = 1000000 + addup;
-
-
-            combine.UpL = combine.price.Max();
-            combine.DownL = combine.price.Min();
-            combine.count = tempp.Count;
+            ViewBag.addupprofit = profitlist.Sum();
+            ViewBag.cash = 1000000 + profitlist.Sum();
 
             return View(combine);
         }

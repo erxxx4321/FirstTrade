@@ -19,92 +19,67 @@ namespace FirstTrade_.Controllers
     {
         private Model1 db = new Model1();
 
-        // GET: Stock
-        public ActionResult Index()
+        public ActionResult Test1(RegistersCriteriaVM inject, CashRelateVM injectmoney, DateTime? targetday, string targetname)
         {
-            return View(db.stockprices.ToList());
-        }
+            var originalinject = inject; var origianlinjectmoney = injectmoney;
+            var gameservice = new GameServices();
 
-
-        public ActionResult Test1(RegistersCriteria inject, CashRelateVM injectmoney, DateTime? Date123, String Stock123)
-        {
-            var oinject = inject; var oinjectmoney = injectmoney;
-            #region 日期
-            var curdb = db.stockprices.ToList();
-            int ct;
-            if (!string.IsNullOrEmpty(Stock123))
+            #region 取日期
+            int startdate;
+            gameservice.ChangeTarget(targetname, out startdate);
+            try
+            { gameservice.ChangeDay(targetday, out startdate);}
+            catch
             {
-                curdb = curdb.Where(x => x.證券代碼 == Stock123).ToList();
-                inject.StartDate = curdb[0].id;
-            }
-            if (Date123 != null)
-            {
-                string SDate = Convert.ToDateTime(Date123).ToString("yyyy-MM-dd");
-                curdb = curdb.Where(x => x.年月日 == SDate).ToList();
-
-                if (curdb == null || curdb.Count == 0)
-                {
-                    ModelState.AddModelError(string.Empty, "選擇日期無資料");
-                    inject = oinject;
-                    injectmoney = oinjectmoney;
-                    curdb = db.stockprices.ToList();
-                }
-                inject.StartDate = curdb[0].id;
-            }
-            if (inject.Total > 0)
-            {
-                if (inject.Go > 0) ct = inject.Total + inject.Go;
-                else ct = inject.Total + 1;
-            }
-            else
-            {
-                ct = 30;
+                inject = originalinject;
+                injectmoney = origianlinjectmoney;
             }
 
-            curdb = db.stockprices.Where(x => x.id >= inject.StartDate).Where(x => x.id < inject.StartDate + ct).ToList();
+            int currenttotalday = gameservice.CheckTotalday(inject.Total, inject.Go);
 
-            List<string> dates = curdb.Select(x => x.年月日).ToList();
+            gameservice.PickDays(startdate, currenttotalday);
+            List<string> dates = gameservice.PickDates();
+            List<double?[]> datas = gameservice.PickDatas();
+            List<double?> volumns = gameservice.PickVolumns();
 
-            List<double?[]> data = curdb.Select(x => new double?[] { x.開盤價_元_, x.收盤價_元_, x.最低價_元_, x.最高價_元_, x.成交量_千股_ }).ToList();
+            var gamedisplay = new GameDisplayVM { GameDates = dates, GameDatas = datas, GameVolumns = volumns };
 
-            List<double?> volumns = curdb.Select(x => x.成交量_千股_).ToList();
-
-            var dDisplay = new DDisplay { DDate = dates, DData = data, DVolumn = volumns };
-
-
-            ViewBag.Total = ct;
+            ViewBag.Total = currenttotalday;
             ViewBag.StartDate = inject.StartDate;
-            dDisplay.stockname = curdb[0].證券代碼 +" "+ curdb[0].證券名稱;
+            gamedisplay.StockName = gameservice.currentdb[0].證券代碼 +" "+ gameservice.currentdb[0].證券名稱;
 
             #endregion
 
-            #region 錢錢
-            customer customer; //決定改變時才設定
-            int newprice = Convert.ToInt32(data[data.Count() - 1][0] * 1000); // 最新價格
+            #region 資金資料更新
+            //customer customer; //決定改變時才設定
+            int newprice = Convert.ToInt32(datas[datas.Count() - 1][0] * 1000); // 最新價格
             int absip = Math.Abs(injectmoney.Position);
             int absst = Math.Abs(injectmoney.Status);
+            var id = (FormsIdentity)User.Identity;
 
-            customer = db.customers.Find(CashRelateVM.Cid);//使用原本資料
+            //customer = db.customers.Find(CashRelateVM.Cid);//使用原本資料
 
-            if(customer==null)
-            {
-                var id = (FormsIdentity)User.Identity;
-                FormsAuthenticationTicket ticket = id.Ticket;
-                string account = ticket.Name;
-                int? tempid = db.customers.Where(x => string.Compare(x.Account, account, true) == 0).FirstOrDefault().id;
-                customer = db.customers.Find(tempid);
-                CashRelateVM.Cid = Convert.ToInt32(tempid);
-            }
+            customer customer = gameservice.GetCustomer(id);
 
+            //if (customer==null)
+            //{                
+            //    FormsAuthenticationTicket ticket = id.Ticket;
+            //    string account = ticket.Name;
+            //    int? tempid = db.customers.Where(x => string.Compare(x.Account, account, true) == 0).FirstOrDefault().id;
+            //    customer = db.customers.Find(tempid);
+            //    CashRelateVM.Cid = Convert.ToInt32(tempid);
+            //}
+
+            customer = gameservice.ClearProfit(customer, newprice, injectmoney.Position);
             //先結清原有部位損益
-            if (customer.Position != 0)
-            {
-                customer.Profit = (newprice - customer.BuyCost) * injectmoney.Position;//差價*部位(負負得正)
-            }
-            else//原本沒部位
-            {
-                customer.Profit = 0;
-            }
+            //if (customer.Position != 0)
+            //{
+            //    customer.Profit = (newprice - customer.BuyCost) * injectmoney.Position;//差價*部位(負負得正)
+            //}
+            //else//原本沒部位
+            //{
+            //    customer.Profit = 0;
+            //}
 
             //損益確定後進行資料調整
             if (injectmoney.Position != 0)// 有部位
@@ -125,7 +100,7 @@ namespace FirstTrade_.Controllers
                         ViewBag.recordd = "多";
                         ViewBag.recordc = customer.BuyCost;
                         ViewBag.recordday = dates[dates.Count() - 1];
-                        ViewBag.recordstock = dDisplay.stockname;
+                        ViewBag.recordstock = gamedisplay.StockName;
                         int? tempp = customer.Profit;
 
                         if (absip == absst)//平倉
@@ -178,7 +153,7 @@ namespace FirstTrade_.Controllers
                         ViewBag.recordd = "空";
                         ViewBag.recordc = customer.BuyCost;
                         ViewBag.recordday = dates[dates.Count() - 1];
-                        ViewBag.recordstock = dDisplay.stockname;
+                        ViewBag.recordstock = gamedisplay.StockName;
                         int? tempp = customer.Profit;
 
                         if (absip == absst)//平倉
@@ -253,104 +228,8 @@ namespace FirstTrade_.Controllers
             ViewBag.recordstates = recordstates;
             ViewBag.recordlength = recordstates.Count();
 
-            return View(dDisplay);
-        }
-
-
-        // GET: Stock/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            stockprice stockprice = db.stockprices.Find(id);
-            if (stockprice == null)
-            {
-                return HttpNotFound();
-            }
-            return View(stockprice);
-        }
-
-        // GET: Stock/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Stock/Create
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,年月日,收盤價_元_")] stockprice stockprice)
-        {
-            if (ModelState.IsValid)
-            {
-                db.stockprices.Add(stockprice);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(stockprice);
-        }
-
-        // GET: Stock/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            stockprice stockprice = db.stockprices.Find(id);
-            if (stockprice == null)
-            {
-                return HttpNotFound();
-            }
-            return View(stockprice);
-        }
-
-        // POST: Stock/Edit/5
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,年月日,收盤價_元_")] stockprice stockprice)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(stockprice).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(stockprice);
-        }
-
-        // GET: Stock/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            stockprice stockprice = db.stockprices.Find(id);
-            if (stockprice == null)
-            {
-                return HttpNotFound();
-            }
-            return View(stockprice);
-        }
-
-        // POST: Stock/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            stockprice stockprice = db.stockprices.Find(id);
-            db.stockprices.Remove(stockprice);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+            return View(gamedisplay);
+        }      
 
         protected override void Dispose(bool disposing)
         {

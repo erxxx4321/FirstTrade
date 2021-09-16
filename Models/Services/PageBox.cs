@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FirstTrade_.Models.EFModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -37,5 +38,18 @@ namespace FirstTrade_.Models.Services
 			: PageItemCount;
 
 		public int PageItemNextNumber => (PageBarStartNumber + PageItemCount >= Pages) ? Pages : PageBarStartNumber + PageItemCount;
+
+		public PageBox BoxInfo(PagingRequest page,int count,string action)
+        {
+			PageBox pagebox = new PageBox
+			{
+				TotalRecords = count,
+				PageSize = page.PageSize,
+				PageNumber = page.PageNumber,
+				urlTemplate = $"/Home/{action}"+"PageNumber={0}"
+			};
+			return pagebox;
+		}
+
 	}
 }
