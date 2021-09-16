@@ -51,35 +51,33 @@ namespace FirstTrade_.Controllers
             #endregion
 
             #region 資金資料更新
-            //customer customer; //決定改變時才設定
+            customer customer; //決定改變時才設定
             int newprice = Convert.ToInt32(datas[datas.Count() - 1][0] * 1000); // 最新價格
-            int absip = Math.Abs(injectmoney.Position);
-            int absst = Math.Abs(injectmoney.Status);
+            int absinjectposition = Math.Abs(injectmoney.Position);
+            int absinjectstatus = Math.Abs(injectmoney.Status);
             var id = (FormsIdentity)User.Identity;
 
-            //customer = db.customers.Find(CashRelateVM.Cid);//使用原本資料
+            customer = db.customers.Find(CashRelateVM.Cid);//使用原本資料
 
-            customer customer = gameservice.GetCustomer(id);
 
-            //if (customer==null)
-            //{                
-            //    FormsAuthenticationTicket ticket = id.Ticket;
-            //    string account = ticket.Name;
-            //    int? tempid = db.customers.Where(x => string.Compare(x.Account, account, true) == 0).FirstOrDefault().id;
-            //    customer = db.customers.Find(tempid);
-            //    CashRelateVM.Cid = Convert.ToInt32(tempid);
-            //}
+            if (customer == null)
+            {
+                FormsAuthenticationTicket ticket = id.Ticket;
+                string account = ticket.Name;
+                int? tempid = db.customers.Where(x => string.Compare(x.Account, account, true) == 0).FirstOrDefault().id;
+                customer = db.customers.Find(tempid);
+                CashRelateVM.Cid = Convert.ToInt32(tempid);
+            }
 
-            customer = gameservice.ClearProfit(customer, newprice, injectmoney.Position);
             //先結清原有部位損益
-            //if (customer.Position != 0)
-            //{
-            //    customer.Profit = (newprice - customer.BuyCost) * injectmoney.Position;//差價*部位(負負得正)
-            //}
-            //else//原本沒部位
-            //{
-            //    customer.Profit = 0;
-            //}
+            if (customer.Position != 0)
+            {
+                customer.Profit = (newprice - customer.BuyCost) * injectmoney.Position;//差價*部位(負負得正)
+            }
+            else//原本沒部位
+            {
+                customer.Profit = 0;
+            }
 
             //損益確定後進行資料調整
             if (injectmoney.Position != 0)// 有部位
@@ -89,10 +87,10 @@ namespace FirstTrade_.Controllers
                 {
                     if (injectmoney.Status > 0) // 加倉
                     {
-                        customer.Cash = injectmoney.Cash - newprice * absst;
+                        customer.Cash = injectmoney.Cash - newprice * absinjectstatus;
                         customer.Position = injectmoney.Position + injectmoney.Status;
                         customer.Profit = customer.Profit;//但要計算後的
-                        customer.BuyCost = (injectmoney.BuyCost * absip + newprice * absst) / (absip + absst);//(舊成本+新成本)/全部位 -> 平均成本
+                        customer.BuyCost = (injectmoney.BuyCost * absinjectposition + newprice * absinjectstatus) / (absinjectposition + absinjectstatus);//(舊成本+新成本)/全部位 -> 平均成本
                         customer.Status = 0;//最後會回歸0
                     }
                     else if (injectmoney.Status < 0) // 減倉(獲利了結 -> 紀錄)
@@ -103,25 +101,25 @@ namespace FirstTrade_.Controllers
                         ViewBag.recordstock = gamedisplay.StockName;
                         int? tempp = customer.Profit;
 
-                        if (absip == absst)//平倉
+                        if (absinjectposition == absinjectstatus)//平倉
                         {
-                            customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absst + customer.Profit);//剩的現金+成本+最新損益，absst = absip
+                            customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absinjectstatus + customer.Profit);//剩的現金+成本+最新損益，absst = absip
                             customer.Position = injectmoney.Position + injectmoney.Status;//應該=0
                             customer.Profit = 0;//損益結清至現金了
                             customer.BuyCost = 0;//消掉
                             customer.Status = 0;
                         }
-                        else if (absip > absst)//沒減乾淨
+                        else if (absinjectposition > absinjectstatus)//沒減乾淨
                         {
-                            customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absst + customer.Profit * absst / absip);//剩的現金+部分成本+最新部分損益
+                            customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absinjectstatus + customer.Profit * absinjectstatus / absinjectposition);//剩的現金+部分成本+最新部分損益
                             customer.Position = injectmoney.Position + injectmoney.Status;//通用
-                            customer.Profit = customer.Profit * (absip - absst) / absip;//剩未結清部分 ->不能用（1-absst/absip）因為會變分數不能計算
+                            customer.Profit = customer.Profit * (absinjectposition - absinjectstatus) / absinjectposition;//剩未結清部分 ->不能用（1-absst/absip）因為會變分數不能計算
                             customer.BuyCost = injectmoney.BuyCost;//不變
                             customer.Status = 0;
                         }
-                        else if (absip < absst)//反向開倉
+                        else if (absinjectposition < absinjectstatus)//反向開倉
                         {
-                            customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absip + customer.Profit) - (newprice * (absst - absip));//剩的錢+舊部位結清-新成本
+                            customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absinjectposition + customer.Profit) - (newprice * (absinjectstatus - absinjectposition));//剩的錢+舊部位結清-新成本
                             customer.Position = injectmoney.Position + injectmoney.Status;//通用
                             customer.Profit = 0;//損益結清，新損益未出現
                             customer.BuyCost = newprice;//新開始
@@ -129,8 +127,8 @@ namespace FirstTrade_.Controllers
                         }
 
                         ViewBag.records = newprice;
-                        if (absst > absip) { ViewBag.recordp = absip; }
-                        else if (absst <= absip) { ViewBag.recordp = absst; }
+                        if (absinjectstatus > absinjectposition) { ViewBag.recordp = absinjectposition; }
+                        else if (absinjectstatus <= absinjectposition) { ViewBag.recordp = absinjectstatus; }
                         ViewBag.recordf = tempp - customer.Profit;
                         db.recordprofits.Add(new recordprofit { userid = CashRelateVM.Cid, stocknumber = ViewBag.recordstock, direction = ViewBag.recordd, buycost = ViewBag.recordc, sellprice = ViewBag.records, position = ViewBag.recordp, profit = ViewBag.recordf, date = ViewBag.recordday });
                         db.SaveChanges();
@@ -142,10 +140,10 @@ namespace FirstTrade_.Controllers
                 {
                     if (injectmoney.Status < 0) // 加倉
                     {
-                        customer.Cash = injectmoney.Cash - newprice * absst;
+                        customer.Cash = injectmoney.Cash - newprice * absinjectstatus;
                         customer.Position = injectmoney.Position + injectmoney.Status;
                         customer.Profit = customer.Profit;//但是要計算後的
-                        customer.BuyCost = (injectmoney.BuyCost * absip + newprice * absst) / (absip + absst);//(舊成本+新成本)/全部位 -> 平均成本，分母記得絕對值
+                        customer.BuyCost = (injectmoney.BuyCost * absinjectposition + newprice * absinjectstatus) / (absinjectposition + absinjectstatus);//(舊成本+新成本)/全部位 -> 平均成本，分母記得絕對值
                         customer.Status = 0;//最後會回歸0
                     }
                     else if (injectmoney.Status > 0) // 減倉
@@ -156,25 +154,25 @@ namespace FirstTrade_.Controllers
                         ViewBag.recordstock = gamedisplay.StockName;
                         int? tempp = customer.Profit;
 
-                        if (absip == absst)//平倉
+                        if (absinjectposition == absinjectstatus)//平倉
                         {
-                            customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absst + customer.Profit);//剩的現金+成本+最新損益，absst = absip
+                            customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absinjectstatus + customer.Profit);//剩的現金+成本+最新損益，absst = absip
                             customer.Position = injectmoney.Position + injectmoney.Status;//通用
                             customer.Profit = 0;//損益結清至現金了
                             customer.BuyCost = 0;//消掉
                             customer.Status = 0;
                         }
-                        else if (absip > absst)//沒減乾淨
+                        else if (absinjectposition > absinjectstatus)//沒減乾淨
                         {
-                            customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absst + customer.Profit * absst / absip);//剩的現金+部分成本+最新部分損益
+                            customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absinjectstatus + customer.Profit * absinjectstatus / absinjectposition);//剩的現金+部分成本+最新部分損益
                             customer.Position = injectmoney.Position + injectmoney.Status;//通用
-                            customer.Profit = customer.Profit * (absip - absst) / absip;//剩未結清部分
+                            customer.Profit = customer.Profit * (absinjectposition - absinjectstatus) / absinjectposition;//剩未結清部分
                             customer.BuyCost = injectmoney.BuyCost;//不變
                             customer.Status = 0;
                         }
-                        else if (absip < absst)//反向開倉
+                        else if (absinjectposition < absinjectstatus)//反向開倉
                         {
-                            customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absip + customer.Profit) - (newprice * (absst - absip));//剩的錢+舊部位結清-新成本
+                            customer.Cash = injectmoney.Cash + (injectmoney.BuyCost * absinjectposition + customer.Profit) - (newprice * (absinjectstatus - absinjectposition));//剩的錢+舊部位結清-新成本
                             customer.Position = injectmoney.Position + injectmoney.Status;//通用
                             customer.Profit = 0;//損益結清，新損益未出現
                             customer.BuyCost = newprice;//新開始
@@ -182,8 +180,8 @@ namespace FirstTrade_.Controllers
                         }
 
                         ViewBag.records = newprice;
-                        if (absst > absip) { ViewBag.recordp = absip; }
-                        else if (absst <= absip) { ViewBag.recordp = absst; }
+                        if (absinjectstatus > absinjectposition) { ViewBag.recordp = absinjectposition; }
+                        else if (absinjectstatus <= absinjectposition) { ViewBag.recordp = absinjectstatus; }
                         ViewBag.recordf = tempp - customer.Profit;
                         db.recordprofits.Add(new recordprofit { userid = CashRelateVM.Cid, stocknumber = ViewBag.recordstock, direction = ViewBag.recordd, buycost = ViewBag.recordc, sellprice = ViewBag.records, position = ViewBag.recordp, profit = ViewBag.recordf, date = ViewBag.recordday });
                         db.SaveChanges();
@@ -195,7 +193,7 @@ namespace FirstTrade_.Controllers
             {
                 if (injectmoney.Status > 0)//建立正部位
                 {
-                    customer.Cash = injectmoney.Cash - newprice * absst;
+                    customer.Cash = injectmoney.Cash - newprice * absinjectstatus;
                     customer.Position = injectmoney.Position + injectmoney.Status;
                     customer.Profit = 0;
                     customer.BuyCost = newprice;//新開始
@@ -203,7 +201,7 @@ namespace FirstTrade_.Controllers
                 }
                 else if (injectmoney.Status < 0)//建立負部位
                 {
-                    customer.Cash = injectmoney.Cash - newprice * absst;
+                    customer.Cash = injectmoney.Cash - newprice * absinjectstatus;
                     customer.Position = customer.Position + injectmoney.Status;
                     customer.Profit = 0;
                     customer.BuyCost = newprice;//新開始

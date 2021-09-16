@@ -84,32 +84,5 @@ namespace FirstTrade_.Models.Services
             return volumns;
         }
 
-        public customer GetCustomer(FormsIdentity id)
-        {
-            customer customer = db.customers.Find(CashRelateVM.Cid);
-
-            if (customer == null)
-            {
-                var temp = new AreasServices();
-                int? userid = temp.GetId(id);
-                customer = db.customers.Find(userid);
-                CashRelateVM.Cid = Convert.ToInt32(userid);
-            }
-
-            return customer;
-        }
-
-        public customer ClearProfit(customer customer,int newprice, int position)
-        {
-            if (customer.Position != 0)
-            {
-                customer.Profit = (newprice - customer.BuyCost) *position;//差價*部位(負負得正)
-            }
-            else//原本沒部位
-            {
-                customer.Profit = 0;
-            }
-            return customer;
-        }
     }
 }
